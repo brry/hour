@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+oldstuff/
 Material/cache
 Material/figure
 Material/Rintro_1h-concordance.tex
@@ -12,3 +13,4 @@ Material/Rintro_1h.synctex.gz
 Material/Rintro_1h.tex
 Material/Rintro_1h.toc
 Material/Rintro_1h.vrb
+Material/DWDdata
