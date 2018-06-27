@@ -35,9 +35,23 @@
   \href{https://github.com/brry/hour}{github.com/brry/hour} \hfill
   ~~ \insertframenumber / \inserttotalframenumber~~~~~~~~~}}}
 
+
+% define an environment for the exercises
+\newcounter{exercisecount}
+\setcounter{exercisecount}{0}
+\newenvironment{exercise}[1]
+{% This is the begin code
+\stepcounter{exercisecount}
+\begin{block}{Exercise \arabic{exercisecount}: #1}
+}
+{% This is the end code
+\end{block} }
+\resetcounteronoverlays{exercisecount}
+
 % Reference images:
 \newcommand{\bildlink}[1]{\flushleft{\tiny \href{#1}{\textcolor{gray}{#1}} \normalsize }}
 \newcommand{\bildlinkt}[2]{\flushleft{\tiny \href{#1}{\textcolor{gray}{#2}} \normalsize }}
+
 % format inline R command names in blue courier:
 \newcommand{\rcode}[1]{\texttt{\textcolor{Blue}{#1}}} % or use Blue
 
@@ -72,47 +86,96 @@ opts_chunk$set(cache=T, echo=TRUE, fig.height=3.3, fig.width=5, out.width='0.9\\
 
 % ---------------------------
 
+{\usebackgroundtemplate{\includegraphics[width=\paperwidth]{fig_extern/slidebg-1.pdf}}
 \begin{frame}%[plain]
 \vspace{1em}
+\TPshowboxesfalse % no border around this box
+\begin{textblock*}{18em}(10pt,30pt) % topleft corner x=10pt, y=30pt
+\centering
 \Large
-\textbf{R Intro\\[1.5em] \large start your programming \\journey in 1 hour}\\[2em]
+\vspace{1em}
+\includegraphics[width=0.8cm]{fig_extern/Rlogo.png}
+\textbf{introduction\\[0.8em] \large start your programming\\journey in 1 hour}
+\end{textblock*}
 \normalsize
-Berry Boessenkool, June 2018\\[1em]
-\texttt{berry-b@gmx.de}\\[1em]
-\href{https://github.com/brry/rdwd\#rdwd}{github.com/brry/rdwd}\\
-\href{https://cran.r-project.org/package=extremeStat/vignettes/extremeStat.html}{cran.r-project.org/package=extremeStat}\\[1em]
+\vspace{10em}
+Berry Boessenkool, June 2018\\[0.5em]
+\texttt{berry-b@gmx.de}\\[0.5em]
+\href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
 \scriptsize
 \textit{Presentation template generated with} \rcode{berryFunctions::createPres}\\
 \normalsize
-
 \TPshowboxesfalse % no border around this box
-\only<2-3>{ % photography note and licence
-\begin{textblock*}{8em}(250pt,30pt) % topleft corner x=250pt, y=30pt
+ % photography note and licence
+\begin{textblock*}{8em}(230pt,30pt) % topleft corner x=230pt, y=30pt
 \centering
 \textblockcolour{Dandelion}
 \vspace{0.5em}
 \includegraphics[width=3em]{fig_extern/camera2.png}\\
 \footnotesize
 ENCOURAGED\\[0.5em]%
-\onslide<3>{
 \includegraphics[width=6em]{fig_extern/ccby.png}\\[-0.3em]
 \href{https://creativecommons.org/licenses/by/4.0}{use freely, cite me}%
-}
 \normalsize
 \vspace{0.5em}
 \end{textblock*}
 \TPshowboxestrue % borders around other boxes, as specified by \usepackage[...,showboxes]{textpos}
-} % end camera + licence
 \textblockcolour{} % reset block fill color to none/transparent
 \end{frame}
 
 
 % ---------------------------
 
-\begin{frame}[fragile]{Frametitle}
-<<chunkname, size="footnotesize">>=
-plot(rnorm(1000))
+\begin{frame}{\rcode{print("Hello world!")}}
+\begin{itemize}[<+->]
+\vspace{-1em}
+\item Berry Boessenkool $\rightarrow$ berry-b@gmx.de
+\item Geoecology @ Potsdam University
+\item R Fan\onslide<+->atic \onslide<+-> since 2010
+\item Teaching, programming, consulting, community \href{https://www.meetup.com/de-DE/Berlin-R-Users-Group/}{\includegraphics[width=3em]{fig_extern/BRUG_full.png}}
+\vspace{0.5em}
+\item \includegraphics[width=0.7cm]{fig_extern/Rlogo.png} \onslide<+->is free, \onslide<+->open source, \onslide<+->has a large user community, \onslide<+-> will make your work efficient and productive \onslide<+-> and is the standard for data analysis in many universities and industries
+\item R installation instructions: \href{https://github.com/brry/course\#install}{github.com/brry/course\#install}
+\vspace{0.9em}
+\item Today: \onslide<+-> wide but shallow introduction, no deep understanding
+\item Brief inputs followed by short exercises (for max learning)
+\item \alert{Don't hesitate to ask the helpers}
+\item \alert{If we're proceeding too fast, please interrupt!}
+\end{itemize}
+\end{frame}
+
+% ---------------------------
+
+\begin{frame}{Integrated Development Environment (IDE): RStudio}
+\begin{figure}
+\includegraphics[width=0.95\textwidth]{fig_extern/Rstudio2.png}
+\end{figure}
+\label{rstudio}
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}{Get started in R}
+\pause
+\begin{exercise}{R is an awesome calculator}
+In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\\
+\textit{If you don't know how to compute a square root in R, you can google it!}
+\end{exercise}
+\vspace{-1em}
+\pause
+<<sol_Rcalc, eval=F>>=
+21+21 ; 7*6 ; 0.3/4*sqrt(313600)
 @
+\vspace{-1em}
+\pause
+\begin{itemize}[<+->]
+  \item objects: assign with ~ \rcode{$<-$} ~ Rstudio Keyboard shortcut:  \rcode{ALT} + \rcode{-}  \\
+        \rcode{nstudents <- 15\\nstudents\\nstudents > 12}
+  \item What's a good object name? \onslide<+-> $\rightarrow$ short, but explanatory,
+        \onslide<+-> lowerCamelStandard\_or\_underscore are good naming conventions
+  \item comments: \texttt{\textcolor[rgb]{0,0.392,0}{\# everything after a hashtag is not executed.}}
+  \item scripts: Rstudio
+\end{itemize}
 \end{frame}
 
 % ---------------------------
@@ -141,13 +204,6 @@ plot(rnorm(1000))
 
 \begin{frame}{NoCodeNoFragile}
 R package \rcode{rdwd} ~~$->$~~ easy usage of weather datasets
-\end{frame}
-
-% ---------------------------
-
-\begin{frame}{includegraphics}
-\includegraphics[height=0.9\textheight]{fig_extern/MyFig.pdf}
-% \includegraphics[width=0.99\textwidth]{fig_extern/MyFig.pdf}
 \end{frame}
 
 % ---------------------------
