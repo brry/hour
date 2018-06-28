@@ -37,6 +37,8 @@
 
 
 % define an environment for the exercises
+\setbeamercolor{block title}{bg=CornflowerBlue!40}
+\setbeamercolor{block body}{bg=YellowGreen!40}
 \newcounter{exercisecount}
 \setcounter{exercisecount}{0}
 \newenvironment{exercise}[1]
@@ -122,6 +124,7 @@ ENCOURAGED\\[0.5em]%
 \TPshowboxestrue % borders around other boxes, as specified by \usepackage[...,showboxes]{textpos}
 \textblockcolour{} % reset block fill color to none/transparent
 \end{frame}
+}
 
 
 % ---------------------------
@@ -184,26 +187,68 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 
 % ---------------------------
 
-\begin{frame}[fragile]{Frametitle}
-\textblockrulecolour{red}
-\pause
-\begin{itemize}[<+->]
-\item ItemOne
-\item ItemTwo
+\begin{frame}{Preparation to reading files}
+\begin{exercise}{Set up folder}
+\begin{itemize}%[<+->]
+  \item Create a folder for this course 
+  \item With \rcode{rightclick on \textbf{Raw} + save as}, download the weather 
+        \href{https://github.com/brry/hour/blob/master/Material/clim.txt}{dataset} and
+        \href{https://github.com/brry/hour/blob/master/Material/meta.txt}{metadata} 
+        into that folder
+  \item Create an R script in the same folder\\
+        (Rstudio: \rcode{CTRL} + \rcode{SHIFT} + \rcode{N}, then \rcode{CTRL} + \rcode{S})
+  \item Tell R where to look for data through\\ 
+        Rstudio: Session - Set Working Directory - To Source File Location
+  \item Copy the command thus sent to the console into the beginning of the script. 
+        This makes it reproducible later on.\\
+        \rcode{setwd("C:/path/to/input")} {\footnotesize \texttt{\textcolor[rgb]{0,0.392,0}{ \# change back- to forwardslashes}}}\\
 \end{itemize}
-\onslide<+->
-\begin{flushleft} SomeMore \end{flushleft}
-\only<5>{
-\begin{textblock*}{1.2cm}(2.0cm,3.6cm)
-\vspace{1.1cm} ~
-\end{textblock*}
-}
+\end{exercise}
 \end{frame}
 
 % ---------------------------
 
-\begin{frame}{NoCodeNoFragile}
-R package \rcode{rdwd} ~~$->$~~ easy usage of weather datasets
+\begin{frame}[fragile]{Reading files into R}
+\begin{itemize}[<+->]
+  \item Read the climate data file into R with the command \rcode{read.table}
+  \item Assign it to an object with a good name\\ \onslide<+->
+        <<readfile1, eval=F>>=
+        clim <- read.table(file="clim.txt")
+        @
+  \item If R tells you "no such file" exists, check the output of \rcode{dir()}.
+  \item Check the object with \rcode{head(YourObject)}.
+  \item \rcode{str(YourObject)} must yield 19 columns with data types: \texttt{int, factor, num}.
+  \item Use the documentation to find out settings for the arguments:\\
+        <<readfile2, eval=F>>=
+        help(read.table)   ;   ?read.table   #   or press F1.
+        @
+        \onslide<+->
+        <<readfile3, eval=F>>=
+        clim <- read.table(file="clim.txt", header=TRUE)
+        @
+\end{itemize}
+\end{frame}
+
+% ---------------------------
+
+\begin{frame}{Reading files into R}
+\begin{exercise}{Reading files}
+\begin{itemize}
+  \item Read the metadata file into R with the command \rcode{read.table}, again assigning it to an object with a good name.
+  \item You need to set the arguments \texttt{file}, \texttt{sep}, \texttt{header}, \texttt{stringsAsFactors}.
+  \item \rcode{str(YourObject)} must yield 5 chr (character) columns
+\end{itemize}
+\end{exercise}
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: Reading files}
+<<solreadfile>>=
+clim <- read.table(file="clim.txt", header=TRUE)
+meta <- read.table(file="meta.txt", header=TRUE, 
+                   sep=";", stringsAsFactors=FALSE)
+@
 \end{frame}
 
 % ---------------------------
