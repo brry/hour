@@ -73,7 +73,6 @@
 
 \begin{document}
 \color{black}
-\centering
 
 
 % ---------------------------
@@ -90,6 +89,7 @@ opts_chunk$set(cache=T, echo=TRUE, fig.height=3.3, fig.width=5, out.width='0.9\\
 
 {\usebackgroundtemplate{\includegraphics[width=\paperwidth]{fig_extern/slidebg-1.pdf}}
 \begin{frame}%[plain]
+\begin{center}
 \vspace{1em}
 \TPshowboxesfalse % no border around this box
 \begin{textblock*}{18em}(10pt,30pt) % topleft corner x=10pt, y=30pt
@@ -123,6 +123,7 @@ ENCOURAGED\\[0.5em]%
 \end{textblock*}
 \TPshowboxestrue % borders around other boxes, as specified by \usepackage[...,showboxes]{textpos}
 \textblockcolour{} % reset block fill color to none/transparent
+\end{center}
 \end{frame}
 }
 
@@ -189,7 +190,7 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 
 \begin{frame}{Preparation to reading files}
 \begin{exercise}{Set up folder}
-\begin{itemize}%[<+->]
+\begin{enumerate}%[<+->]
   \item Create a folder for this course 
   \item With \rcode{rightclick on \textbf{Raw} + save as}, download the weather 
         \href{https://github.com/brry/hour/blob/master/Material/clim.txt}{dataset} and
@@ -202,7 +203,7 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
   \item Copy the command thus sent to the console into the beginning of the script. 
         This makes it reproducible later on.\\
         \rcode{setwd("C:/path/to/input")} {\footnotesize \texttt{\textcolor[rgb]{0,0.392,0}{ \# change back- to forwardslashes}}}\\
-\end{itemize}
+\end{enumerate}
 \end{exercise}
 \end{frame}
 
@@ -233,11 +234,12 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 
 \begin{frame}{Reading files into R}
 \begin{exercise}{Reading files}
-\begin{itemize}
+\begin{enumerate}
   \item Read the metadata file into R with the command \rcode{read.table}, again assigning it to an object with a good name.
   \item You need to set the arguments \texttt{file}, \texttt{sep}, \texttt{header}, \texttt{stringsAsFactors}.
   \item \rcode{str(YourObject)} must yield 5 chr (character) columns
-\end{itemize}
+  \item BONUS: what does \rcode{tail(clim)} return?
+\end{enumerate}
 \end{exercise}
 \end{frame}
 
@@ -249,19 +251,55 @@ clim <- read.table(file="clim.txt", header=TRUE)
 meta <- read.table(file="meta.txt", header=TRUE, 
                    sep=";", stringsAsFactors=FALSE)
 @
+<<solreadfile2, echo=-1>>=
+Clim <- clim[,1:7]
+tail(Clim) # last rows of an object
+@
 \end{frame}
 
 % ---------------------------
 
 \section{subsetting data.frames}
 
-% ---------------------------
+%------------------------------------------------------------%
 
-\begin{frame}{Conclusions}
+\begin{frame}{Objects: data.frames}
+\vspace{-0.5em}
 \begin{itemize}[<+->]
-\item ItemOne
-\item ItemTwo
+  \item For tables with different data types (numbers, characters, categories, integers), R has the object type data.frame
+  \item \rcode{read.table} also returns a data.frame
+  \item If we have the object \rcode{df}, we can subset with \rcode{df[rows,columns]}
+  \item \rcode{df[1,2:4]; \onslide<+-> df[2, ]; \onslide<+-> ~ df[ ,"name"]; \onslide<+-> df\$name}
 \end{itemize}
+\onslide<+->
+\begin{exercise}{Data.frame indexing}
+  From the climate dataset, obtain:
+  \begin{enumerate}
+  \item The first 5 values in column 4
+  \item The column UPM (relative humidity)
+  \item BONUS 1: The maximum sunshine duration (SDK)
+  \item BONUS 2: What command do you need to get the number of rows?
+  \item BONUS 3: What is better and worse in \rcode{df[ ,"name"]} vs \rcode{df[ ,3]}?
+  \end{enumerate}
+\end{exercise}
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: subsetting data.frames}
+\vspace{-2em}
+<<sol_subset, eval=T, echo=-(1:3), size="scriptsize">>=
+options(width=80)
+clim <- read.table(file="clim.txt", header=TRUE)
+Clim <- head(clim, 20)
+clim[1:5, 4]
+Clim$UPM
+max(clim$SDK)  ;   max(clim[ ,"SDK"])
+nrow(clim)
+@
+\vspace{-0.9em}
+\rcode{df[ ,"name"]} is better understandable for humans and still returns the same if the order of the columns is changed.
+But it takes more typing.
 \end{frame}
 
 % ---------------------------
@@ -270,10 +308,74 @@ meta <- read.table(file="meta.txt", header=TRUE,
 
 % ---------------------------
 
-\begin{frame}[fragile]{Frametitle2}
-<<chunkname2, size="footnotesize">>=
-plot(rnorm(1000))
+\begin{frame}[fragile]{Plotting}
+General code for scatterplots: \rcode{plot(x, y, ...)}
+\pause
+<<plot_indo1, echo=-1, fig.height=2.5>>=
+par(mar=c(2.8,2.8,1.5,0), mgp=c(1.8,0.7,0))
+plot(x=Indometh$time, y=Indometh$conc,
+     col="orange", pch=16, main="Awesome Graph!")
 @
+\end{frame}
+
+% ---------------------------
+
+\begin{frame}[fragile]{Plotting}
+Please convert the date column with 
+<<dateconv, size="small">>=
+clim$MESS_DATUM <- as.Date(clim$MESS_DATUM, format="%Y-%m-%d")
+@
+\onslide<+->
+\begin{exercise}{Scatterplots, line plots}
+\begin{enumerate}
+  \item Generate a figure with \rcode{plot(clim\$VPM, clim\$TMK)}
+  \item Improve the axis labels. Use the metadata to figure out the column name meanings.
+  \item BONUS: Add an informative graph title
+  \item Plot a time series of the daily temperature maximum. 
+        What value do you need to give to the argument \texttt{type}? 
+        Again, use the documentation of \rcode{?plot()} to find out.
+\end{enumerate}
+\end{exercise}
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: Scatterplots, line plots}
+\vspace{-0.5em}
+<<sol_plot, eval=T, echo=-1, size="scriptsize", fig.height=2.5>>=
+par(mfrow=c(1,2), mgp=c(2,0.7,0), mar=c(3,3,2,1), las=1, cex.main=0.8)
+plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
+     main="Korrelation Tagesmittelwerte\nPotsdam 2016-2018, DWD")
+plot(clim$MESS_DATUM, clim$TXK, type="l")
+@
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Plotting live demo I}
+<<plot_live, fig.show="hide", size="scriptsize">>=
+plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
+     main="Der maximale Dampfdruck ist Temperatur-limitiert
+     (Korrelation Tagesmittelwerte Potsdam 2016-2018, DWD)",
+     las=1, col="red", cex.main=0.9, pch=3)
+#
+#
+# install.packages("berryFunctions")
+plot(clim$MESS_DATUM, clim$TXK, type="l", xlab="", xaxt="n", las=1)
+berryFunctions::monthAxis(quiet=TRUE)
+@
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Plotting live demo II}
+\includegraphics[width=\textwidth]{figure/plot_live-1.pdf}
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Plotting live demo III}
+\includegraphics[width=\textwidth]{figure/plot_live-2.pdf}
 \end{frame}
 
 % ---------------------------
@@ -290,7 +392,7 @@ plot(rnorm(1000))
 
 % ---------------------------
 
-\section{getting help, outlook}
+\section{further help, outlook}
 
 % ---------------------------
 
@@ -299,24 +401,5 @@ plot(rnorm(1000))
 plot(rnorm(1000))
 @
 \end{frame}
-
-% ---------------------------
-
-\appendixbegin
-
-% ---------------------------
-
-\begin{frame}[fragile]{AppendixTitle}
-<<chunkname5, echo=FALSE>>=
-plot(1, type="n", las=1)
-text(1,1, "Appendix Material", col="orange")
-@
-\pause
-Works with pause
-\end{frame}
-
-% ---------------------------
-
-\appendixend
 
 \end{document}
