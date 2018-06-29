@@ -189,7 +189,7 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 % ---------------------------
 
 \begin{frame}{Preparation to reading files}
-\begin{exercise}{Set up folder}
+\begin{exercise}{Set up folder and script}
 \begin{enumerate}%[<+->]
   \item Create a folder for this course 
   \item With \rcode{rightclick on \textbf{Raw} + save as}, download the weather 
@@ -209,7 +209,7 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 
 % ---------------------------
 
-\begin{frame}[fragile]{Reading files into R}
+\begin{frame}[fragile]{Reading files into R, opening the help documentation}
 \begin{itemize}[<+->]
   \item Read the climate data file into R with the command \rcode{read.table}
   \item Assign it to an object with a good name\\ \onslide<+->
@@ -346,7 +346,7 @@ clim$MESS_DATUM <- as.Date(clim$MESS_DATUM, format="%Y-%m-%d")
 par(mfrow=c(1,2), mgp=c(2,0.7,0), mar=c(3,3,2,1), las=1, cex.main=0.8)
 plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
      main="Korrelation Tagesmittelwerte\nPotsdam 2016-2018, DWD")
-plot(clim$MESS_DATUM, clim$TXK, type="l")
+plot(clim$MESS_DATUM, clim$TXK, type="l", main="Saisonalitaet sichtbar")
 @
 \end{frame}
 
@@ -354,15 +354,16 @@ plot(clim$MESS_DATUM, clim$TXK, type="l")
 
 \begin{frame}[fragile]{Plotting live demo I}
 <<plot_live, fig.show="hide", size="scriptsize">>=
+par(mar=c(2,3,2,1), mgp=c(2,0.7,0))
 plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
      main="Der maximale Dampfdruck ist Temperatur-limitiert
      (Korrelation Tagesmittelwerte Potsdam 2016-2018, DWD)",
-     las=1, col="red", cex.main=0.9, pch=3)
+     las=1, pch=3, cex=2, col="red", cex.main=0.9)
 #
 #
 # install.packages("berryFunctions")
-plot(clim$MESS_DATUM, clim$TXK, type="l", xlab="", xaxt="n", las=1)
-berryFunctions::monthAxis(quiet=TRUE)
+plot(clim$MESS_DATUM, clim$TXK, type="l", xlab="", xaxt="n", las=1, lwd=3)
+berryFunctions::monthAxis()
 @
 \end{frame}
 
@@ -378,17 +379,78 @@ berryFunctions::monthAxis(quiet=TRUE)
 \includegraphics[width=\textwidth]{figure/plot_live-2.pdf}
 \end{frame}
 
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{commonly needed \rcode{plot} arguments}
+<<plotoverview, eval=FALSE>>=
+plot(x, y, # point coordinates
+col="lightblue", # point color
+pch=0, # point character (symbol)
+xlab="My label  [km]", ylab="", # axis labels
+main="Graph title", # title
+cex=1.8, # character expansion (symbol size)
+type="l", # draw lines instead of points
+lwd=3, # line width (thickness of lines)
+las=1, # label axis style (axis numbers upright)
+xaxt="n" # axis type (none to suppress axis)
+)
+@
+\end{frame}
+
 % ---------------------------
 
 \section{using for loops}
 
 % ---------------------------
 
-\begin{frame}[fragile]{Frametitle3}
-<<chunkname3, size="footnotesize">>=
-plot(rnorm(1000))
+\begin{frame}[fragile]{Preparing for for loops}
+Please give your metadata rownames as follows:
+<<metarownames>>=
+rownames(meta) <- meta$Par
+@
+\begin{exercise}{using objects to subset}
+\begin{enumerate}
+  \item Create an object \rcode{var} with the character string \rcode{"FX"}.
+  \item Get the meta value for row \rcode{var} and column \rcode{"Label"}.
+  \item Plot the \rcode{var} column of \rcode{clim} as a time series.
+  \item Use the output from task 2 to give the plot a title.
+  \item BONUS: make the x-axis nicer by suppressing the default axis (\rcode{xaxt="n"})
+        and adding a monthAxis from the \rcode{berryFunctions} package.
+\end{enumerate}
+\end{exercise}
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: using objects to subset}
+\vspace{-1.5em}
+<<sol_objectsubset, echo=-3, size="small", fig.height=1.9>>=
+var <- "FX"
+meta[var, "Label"]
+par(mar=c(2,3,2,1), mgp=c(2,0.7,0), las=1)
+plot(clim$MESS_DATUM, clim[,var], type="l", xaxt="n",
+     main=meta[var, "Label"], ylab="", xlab="")
+berryFunctions::monthAxis()
 @
 \end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{For loops}
+\onslide<+->
+A for loop creates a variable, sets it to a value, runs some code,\\ \onslide<+->
+then sets the variable to the next value, runs the code with that,\\ and so on.
+\onslide<+->
+<<for_loop, eval=FALSE>>=
+for(var in meta$Par)
+{
+  plot(clim$MESS_DATUM, clim[,var], type="l", xaxt="n",
+       main=meta[var, "Label"], ylab="", xlab="")
+  berryFunctions::monthAxis()
+}
+@
+\end{frame}
+
 
 % ---------------------------
 
@@ -396,10 +458,39 @@ plot(rnorm(1000))
 
 % ---------------------------
 
-\begin{frame}[fragile]{Frametitle4}
-<<chunkname4, size="footnotesize">>=
-plot(rnorm(1000))
-@
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Selected resources}
+\vspace{-1em}
+\onslide<+-> Books:
+\begin{itemize}[<+->]
+\item Grolemund \& Wickham (2017) \href{http://r4ds.had.co.nz/}{R for Data Science}
+\item J. Adler (2010): R in a Nutshell
+\item U. Ligges (2008): Programmieren mit R (German)
+\end{itemize}
+
+\onslide<+-> Tutorials:
+\begin{itemize}[<+->]
+\item \href{http://www.edx.org/course/introduction-r-programming-microsoft-dat204x-0#!}{Microsoft + Datacamp} (best course I know of, with login, but free)
+\item \href{http://stat545-ubc.github.io/topics.html}{STAT 545}
+\item \href{https://github.com/brry/course}{github.com/brry/course}
+\end{itemize}
+
+\onslide<+-> Reference cards:
+\begin{itemize}[<+->]
+  \item \href{https://www.rstudio.com/wp-content/uploads/2016/09/r-cheat-sheet-1.pdf}{base} and
+        \href{https://www.rstudio.com/wp-content/uploads/2016/02/advancedR.pdf}{advanced} cheatsheets from
+        \href{https://www.rstudio.com/resources/cheatsheets/}{Rstudio}
+  \item \href{https://github.com/jonasstein/R-Reference-Card/raw/master/R-refcard.pdf}{RefCard} by Tom Short \& Jonas Stein
+\end{itemize}
+
+\onslide<+-> The internet:
+\begin{itemize}[<+->]
+  \item \href{www.StackOverflow.com}{StackOverflow} for programming questions $<$-- \alert{main resource}
+\end{itemize}
 \end{frame}
+
+%------------------------------------------------------------%
 
 \end{document}
