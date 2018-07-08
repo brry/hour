@@ -493,4 +493,15 @@ for(var in meta$Par)
 
 %------------------------------------------------------------%
 
+\begin{frame}{Feedback}
+\center{
+Please fill out the feedback form at\\[1em]
+\href{https://bit.ly/feedbackR}{bit.ly/feedbackR}\\[1em]
+(it only takes a few minutes and helps to improve the course)\\[1em]
+Thanks!\\[1em]
+}
+\end{frame}
+
+%------------------------------------------------------------%
+
 \end{document}
