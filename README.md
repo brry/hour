@@ -1,7 +1,7 @@
 1 hour R intro  
 Berry Boessenkool, <berry-b@gmx.de>, June 2018
 
-Material for short R intro courses. 
+Material for short R intro courses.  
 Please install R and R Studio beforehand, following the instructions at
 <https://github.com/brry/course#install>  
 With `rightclick + save target as / Download linked file`, please download the course 
