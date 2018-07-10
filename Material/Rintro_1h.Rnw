@@ -157,6 +157,24 @@ ENCOURAGED\\[0.5em]%
 \label{rstudio}
 \end{frame}
 
+% ---------------------------
+
+\begin{frame}{Preparation for the rest of the course}
+\begin{exercise}{Set up folder and script}
+\begin{enumerate}%[<+->]
+  \item With \rcode{rightclick on} \textbf{\texttt{Raw}} + \rcode{save target as / Download linked file}, download the course 
+        \href{https://github.com/brry/hour/blob/master/Material/Rintro.zip}{material} and
+        unzip it into a folder of your choice.
+  \item Open the \texttt{script\_intro.R} file with Rstudio.
+  \item Tell R where to look for data through\\ 
+        Rstudio: Session - Set Working Directory - To Source File Location
+  \item Copy the command thus sent to the console into the beginning of the script. 
+        This makes it reproducible later on.\\
+        \rcode{setwd("C:/path/to/input")} {\footnotesize \texttt{\textcolor[rgb]{0,0.392,0}{ \# change back- to forwardslashes}}}\\
+\end{enumerate}
+\end{exercise}
+\end{frame}
+
 %------------------------------------------------------------%
 
 \begin{frame}{Get started in R}
@@ -188,27 +206,6 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 
 % ---------------------------
 
-\begin{frame}{Preparation to reading files}
-\begin{exercise}{Set up folder and script}
-\begin{enumerate}%[<+->]
-  \item Create a folder for this course 
-  \item With \rcode{rightclick on \textbf{Raw} + save as}, download the weather 
-        \href{https://github.com/brry/hour/blob/master/Material/clim.txt}{dataset} and
-        \href{https://github.com/brry/hour/blob/master/Material/meta.txt}{metadata} 
-        into that folder
-  \item Create an R script in the same folder\\
-        (Rstudio: \rcode{CTRL} + \rcode{SHIFT} + \rcode{N}, then \rcode{CTRL} + \rcode{S})
-  \item Tell R where to look for data through\\ 
-        Rstudio: Session - Set Working Directory - To Source File Location
-  \item Copy the command thus sent to the console into the beginning of the script. 
-        This makes it reproducible later on.\\
-        \rcode{setwd("C:/path/to/input")} {\footnotesize \texttt{\textcolor[rgb]{0,0.392,0}{ \# change back- to forwardslashes}}}\\
-\end{enumerate}
-\end{exercise}
-\end{frame}
-
-% ---------------------------
-
 \begin{frame}[fragile]{Reading files into R, opening the help documentation}
 \begin{itemize}[<+->]
   \item Read the climate data file into R with the command \rcode{read.table}
@@ -236,7 +233,8 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 \begin{exercise}{Reading files}
 \begin{enumerate}
   \item Read the metadata file into R with the command \rcode{read.table}, again assigning it to an object with a good name.
-  \item You need to set the arguments \texttt{file}, \texttt{sep}, \texttt{header}, \texttt{stringsAsFactors}.
+  \item You need to set the arguments \texttt{file}, \texttt{sep}, \texttt{header}, \texttt{stringsAsFactors}.\\
+        Again: use the documentation to find out what settings are needed!
   \item \rcode{str(YourObject)} must yield 5 chr (character) columns
   \item BONUS: what does \rcode{tail(clim)} return?
 \end{enumerate}
@@ -268,8 +266,8 @@ tail(Clim) # last rows of an object
 \begin{itemize}[<+->]
   \item For tables with different data types (numbers, characters, categories, integers), R has the object type data.frame
   \item \rcode{read.table} also returns a data.frame
-  \item If we have the object \rcode{df}, we can subset with \rcode{df[rows,columns]}
-  \item \rcode{df[1,2:4]; \onslide<+-> df[2, ]; \onslide<+-> ~ df[ ,"name"]; \onslide<+-> df\$name}
+  \item If we have the object \rcode{DF}, we can subset with \rcode{DF[rows,columns]}
+  \item \rcode{DF[1,2:4]; \onslide<+-> DF[2, ]; \onslide<+-> ~ DF[ ,"name"]; \onslide<+-> DF\$name}
 \end{itemize}
 \onslide<+->
 \begin{exercise}{Data.frame indexing}
@@ -279,7 +277,7 @@ tail(Clim) # last rows of an object
   \item The column UPM (relative humidity)
   \item BONUS 1: The maximum sunshine duration (SDK)
   \item BONUS 2: What command do you need to get the number of rows?
-  \item BONUS 3: What is better and worse in \rcode{df[ ,"name"]} vs \rcode{df[ ,3]}?
+  \item BONUS 3: What is better and worse in \rcode{DF[ ,"name"]} vs \rcode{DF[ ,3]}?
   \end{enumerate}
 \end{exercise}
 \end{frame}
@@ -298,7 +296,7 @@ max(clim$SDK)  ;   max(clim[ ,"SDK"])
 nrow(clim)
 @
 \vspace{-0.9em}
-\rcode{df[ ,"name"]} is better understandable for humans and still returns the same if the order of the columns is changed.
+\rcode{DF[ ,"name"]} is better understandable for humans and still returns the same if the order of the columns is changed.
 But it takes more typing.
 \end{frame}
 
