@@ -8,10 +8,8 @@ if(!grepl("Material", wd)) setwd("Material/")
 
 # Benötigtes Paket ----
 if(!requireNamespace("rdwd")) install.packages("rdwd")
-if(packageVersion("rdwd")<"0.10.5") berryFunctions::instGit("brry/rdwd")
 
-library(rdwd)
-vignette("rdwd")
+library(rdwd) # See intro at https://github.com/brry/rdwd#rdwd
 
 
 # Daten ----

@@ -21,7 +21,17 @@
 % \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{navigation symbols}[only frame symbol]
 %\usetheme{Madrid}
-\useoutertheme[subsection=false]{miniframes}
+
+% suppress slide dots: replace   \useoutertheme[subsection=false]{miniframes}
+\setbeamertemplate{headline}
+{%
+  \begin{beamercolorbox}[ht=3.5ex,dp=1.125ex,%
+      leftskip=0cm,rightskip=0cm plus1filll]{section in head/foot}
+    \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+    \insertsectionnavigationhorizontal{0.99\textwidth}{}{}
+  \end{beamercolorbox}%
+}
+
 \beamersetleftmargin{0.5cm}
 \beamersetrightmargin{0.5cm}
 \let\Tiny=\tiny % avoid warning: Font shape `OT1/cmss/m/n' in size <4> not available. size <5> substituted on input line
@@ -30,8 +40,7 @@
   \parbox{\linewidth}{\vspace*{-12pt}
   \textcolor{black}{
    % \scriptsize
-  ~~ Berry Boessenkool, June 2018:
-  1 hour R intro ~~~~~
+  ~~ Berry Boessenkool: 1 hour R intro ~~~~~
   \href{https://github.com/brry/hour}{github.com/brry/hour} \hfill
   ~~ \insertframenumber / \inserttotalframenumber~~~~~~~~~}}}
 
@@ -101,7 +110,7 @@ opts_chunk$set(cache=T, echo=TRUE, fig.height=3.3, fig.width=5, out.width='0.9\\
 \end{textblock*}
 \normalsize
 \vspace{10em}
-Berry Boessenkool, June 2018\\[0.5em]
+Berry Boessenkool, June 2018 + April 2019\\[0.5em]
 \texttt{berry-b@gmx.de}\\[0.5em]
 \href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
 \scriptsize
@@ -244,11 +253,22 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 %------------------------------------------------------------%
 
 \begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: Reading files}
-<<solreadfile>>=
+\vspace{-0.9em}
+<<solreadfile_display, eval=FALSE>>=
 clim <- read.table(file="clim.txt", header=TRUE)
 meta <- read.table(file="meta.txt", header=TRUE, 
                    sep=";", stringsAsFactors=FALSE)
 @
+<<solreadfile_actual, echo=FALSE>>=
+clim <- read.table(file="Rintro/clim.txt", header=TRUE)
+meta <- read.table(file="Rintro/meta.txt", header=TRUE, 
+                   sep=";", stringsAsFactors=FALSE)
+@
+\vspace{-0.9em}
+In the slide source code, I created a copy of \rcode{clim} with fewer columns
+to improve printing in the slides. 
+Whenever I use \rcode{Clim} with a capital C, you can use your normal object:
+\vspace{-0.9em}
 <<solreadfile2, echo=-1>>=
 Clim <- clim[,1:7]
 tail(Clim) # last rows of an object
@@ -286,9 +306,8 @@ tail(Clim) # last rows of an object
 
 \begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: subsetting data.frames}
 \vspace{-2em}
-<<sol_subset, eval=T, echo=-(1:3), size="scriptsize">>=
+<<sol_subset, eval=T, echo=-(1:2), size="scriptsize">>=
 options(width=80)
-clim <- read.table(file="clim.txt", header=TRUE)
 Clim <- head(clim, 20)
 clim[1:5, 4]
 Clim$UPM
@@ -297,7 +316,7 @@ nrow(clim)
 @
 \vspace{-0.9em}
 \rcode{DF[ ,"name"]} is better understandable for humans and still returns the same if the order of the columns is changed.
-But it takes more typing.
+But it needs more typing.
 \end{frame}
 
 % ---------------------------
@@ -343,7 +362,7 @@ clim$MESS_DATUM <- as.Date(clim$MESS_DATUM, format="%Y-%m-%d")
 <<sol_plot, eval=T, echo=-1, size="scriptsize", fig.height=2.5>>=
 par(mfrow=c(1,2), mgp=c(2,0.7,0), mar=c(3,3,2,1), las=1, cex.main=0.8)
 plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
-     main="Korrelation Tagesmittelwerte\nPotsdam 2016-2018, DWD")
+     main="Korrelation Tagesmittelwerte\nPotsdam 2017-2019, DWD")
 plot(clim$MESS_DATUM, clim$TXK, type="l", main="Saisonalitaet sichtbar")
 @
 \end{frame}
@@ -351,11 +370,11 @@ plot(clim$MESS_DATUM, clim$TXK, type="l", main="Saisonalitaet sichtbar")
 %------------------------------------------------------------%
 
 \begin{frame}[fragile]{Plotting live demo I}
-<<plot_live, fig.show="hide", size="scriptsize">>=
-par(mar=c(2,3,2,1), mgp=c(2,0.7,0))
+<<plot_live, fig.show="hide", size="scriptsize", fig.height=3.0>>=
+par(mar=c(3,3,2,1), mgp=c(1.9,0.7,0))
 plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
      main="Der maximale Dampfdruck ist Temperatur-limitiert
-     (Korrelation Tagesmittelwerte Potsdam 2016-2018, DWD)",
+     (Korrelation Tagesmittelwerte Potsdam 2017-2019, DWD)",
      las=1, pch=3, cex=2, col="red", cex.main=0.9)
 #
 #
