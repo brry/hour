@@ -362,7 +362,7 @@ clim$MESS_DATUM <- as.Date(clim$MESS_DATUM, format="%Y-%m-%d")
 <<sol_plot, eval=T, echo=-1, size="scriptsize", fig.height=2.5>>=
 par(mfrow=c(1,2), mgp=c(2,0.7,0), mar=c(3,3,2,1), las=1, cex.main=0.8)
 plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
-     main="Korrelation Tagesmittelwerte\nPotsdam 2017-2019, DWD")
+     main="Korrelation Tagesmittelwerte\nPotsdam 2018-2019, DWD")
 plot(clim$MESS_DATUM, clim$TXK, type="l", main="Saisonalitaet sichtbar")
 @
 \end{frame}
@@ -374,7 +374,7 @@ plot(clim$MESS_DATUM, clim$TXK, type="l", main="Saisonalitaet sichtbar")
 par(mar=c(3,3,2,1), mgp=c(1.9,0.7,0))
 plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
      main="Der maximale Dampfdruck ist Temperatur-limitiert
-     (Korrelation Tagesmittelwerte Potsdam 2017-2019, DWD)",
+     (Korrelation Tagesmittelwerte Potsdam 2018-2019, DWD)",
      las=1, pch=3, cex=2, col="red", cex.main=0.9)
 #
 #
