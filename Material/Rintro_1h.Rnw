@@ -14,6 +14,7 @@
 \usepackage[dvipsnames]{xcolor}
 \renewcommand\appendixname{Appendix}
 \usepackage[absolute,overlay,showboxes]{textpos}
+\usepackage[export]{adjustbox} % vertical adjustment of logos in line of text (valign)
 \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
 \setbeamercolor{background canvas}{bg=white}
 \setbeamercolor{normal text}{fg=black}
@@ -65,6 +66,7 @@
 
 % format inline R command names in blue courier:
 \newcommand{\rcode}[1]{\texttt{\textcolor{Blue}{#1}}} % or use Blue
+\newcommand{\key}[1]{\colorbox{gray!30}{\texttt{\textcolor{Blue}{#1}}}}
 
 % Nice appendix numbering:
 \newcommand{\appendixbegin}{
@@ -142,14 +144,16 @@ ENCOURAGED\\[0.5em]%
 \begin{frame}{\rcode{print("Hello world!")}}
 \begin{itemize}[<+->]
 \vspace{-1em}
-\item Berry Boessenkool $\rightarrow$ berry-b@gmx.de
 \item Geoecology @ Potsdam University
 \item R Fan\onslide<+->atic \onslide<+-> since 2010
-\item Teaching, programming, consulting, community \href{https://www.meetup.com/de-DE/Berlin-R-Users-Group/}{\includegraphics[width=3em]{fig_extern/BRUG_full.png}}
-\vspace{0.5em}
+\item R packages \href{https://github.com/brry/rdwd\#rdwd}{\includegraphics[width=0.5cm,valign=c]{fig_extern/hex.png}}
+, \onslide<+-> training \& consulting \href{https://brry.github.io}{\includegraphics[width=0.5cm,valign=c]{fig_extern/Blogo.png}}
+, \onslide<+-> community \href{https://www.meetup.com/de-DE/Berlin-R-Users-Group/}{\includegraphics[width=3em,valign=c]{fig_extern/BRUG_full.png}}\\
+\hrulefill
+\vspace{0.25em}
 \item \includegraphics[width=0.7cm]{fig_extern/Rlogo.png} \onslide<+->is free, \onslide<+->open source, \onslide<+->has a large user community, \onslide<+-> will make your work efficient and productive \onslide<+-> and is the standard for data analysis in many universities and industries
-\item R installation instructions: \href{https://github.com/brry/course\#install}{github.com/brry/course\#install}
-\vspace{0.9em}
+\item R installation instructions: \href{https://github.com/brry/course\#install}{github.com/brry/course\#install}\\
+\hrulefill
 \item Today: \onslide<+-> wide but shallow introduction, no deep understanding
 \item Brief inputs followed by short exercises (for max learning)
 \item \alert{Don't hesitate to ask the helpers}
@@ -171,15 +175,15 @@ ENCOURAGED\\[0.5em]%
 \begin{frame}{Preparation for the rest of the course}
 \begin{exercise}{Set up folder and script}
 \begin{enumerate}%[<+->]
-  \item With \rcode{rightclick on} \textbf{\texttt{Raw}} + \rcode{save target as / Download linked file}, download the course 
-        \href{https://github.com/brry/hour/blob/master/Material/Rintro.zip}{material} and
-        unzip it into a folder of your choice.
+  \item Download the course \href{https://github.com/brry/hour/raw/master/Material/Rintro.zip}{material}.
+  \item Unzip it into a folder of your choice.
   \item Open the \texttt{script\_intro.R} file with Rstudio.
   \item Tell R where to look for data through\\ 
         Rstudio: Session - Set Working Directory - To Source File Location
   \item Copy the command thus sent to the console into the beginning of the script. 
         This makes it reproducible later on.\\
         \rcode{setwd("C:/path/to/input")} {\footnotesize \texttt{\textcolor[rgb]{0,0.392,0}{ \# change back- to forwardslashes}}}\\
+  \item Have a look at the \texttt{clim} and \texttt{meta} files. You can do this within Rstudio. ;-) 
 \end{enumerate}
 \end{exercise}
 \end{frame}
@@ -200,12 +204,12 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 \vspace{-1em}
 \pause
 \begin{itemize}[<+->]
-  \item objects: assign with ~ \rcode{$<-$} ~ Rstudio Keyboard shortcut:  \rcode{ALT} + \rcode{-}  \\
+  \item objects: assign with ~ \rcode{$<-$} ~ Rstudio Keyboard shortcut:  \key{ALT} + \key{-}  \\
         \rcode{nstudents <- 15\\nstudents\\nstudents > 12}
-  \item What's a good object name? \onslide<+-> $\rightarrow$ short, but explanatory,
+  \item What's a good object name? \onslide<+-> $\rightarrow$ short, but explanatory;
         \onslide<+-> lowerCamelStandard\_or\_underscore are good naming conventions
   \item comments: \texttt{\textcolor[rgb]{0,0.392,0}{\# everything after a hashtag is not executed.}}
-  \item scripts: Rstudio
+  \item Rstudio scripts: Send line/selection to R console:  \key{CTRL} + \key{ENTER}
 \end{itemize}
 \end{frame}
 
@@ -290,7 +294,7 @@ tail(Clim) # last rows of an object
   \item \rcode{DF[1,2:4]; \onslide<+-> DF[2, ]; \onslide<+-> ~ DF[ ,"name"]; \onslide<+-> DF\$name}
 \end{itemize}
 \onslide<+->
-\begin{exercise}{Data.frame indexing}
+\begin{exercise}{data.frame indexing}
   From the climate dataset, obtain:
   \begin{enumerate}
   \item The first 5 values in column 4
@@ -315,7 +319,7 @@ max(clim$SDK)  ;   max(clim[ ,"SDK"])
 nrow(clim)
 @
 \vspace{-0.9em}
-\rcode{DF[ ,"name"]} is better understandable for humans and still returns the same if the order of the columns is changed.
+\rcode{DF[ ,"name"]} is easier to understand for humans and still returns the same if the order of the columns is changed.
 But it needs more typing.
 \end{frame}
 
@@ -342,7 +346,7 @@ Please convert the date column with
 <<dateconv, size="small">>=
 clim$MESS_DATUM <- as.Date(clim$MESS_DATUM, format="%Y-%m-%d")
 @
-\onslide<+->
+\pause
 \begin{exercise}{Scatterplots, line plots}
 \begin{enumerate}
   \item Generate a figure with \rcode{plot(clim\$VPM, clim\$TMK)}
