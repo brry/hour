@@ -31,6 +31,7 @@ write.table(meta, file="Rintro/meta.txt", sep=";", quote=FALSE, row.names=FALSE)
 # ZIP Ordner erstellen:
 
 file.copy("Rintro_1h.pdf", "Rintro", overwrite=TRUE)
+unlink("Rintro.zip")
 zip("Rintro.zip", "Rintro")
 
 
