@@ -494,7 +494,7 @@ for(var in meta$Par)
 \onslide<+-> Tutorials:
 \begin{itemize}[<+->]
 \item \href{http://www.edx.org/course/introduction-r-programming-microsoft-dat204x-0#!}{Microsoft + Datacamp} (best course I know of, with login, but free)
-\item \href{http://stat545-ubc.github.io/topics.html}{STAT 545}
+\item \href{https://stat545.com/}{STAT 545}
 \item \href{https://github.com/brry/course}{github.com/brry/course}
 \end{itemize}
 
