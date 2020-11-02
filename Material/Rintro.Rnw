@@ -1,3 +1,4 @@
+\documentclass[compress, xcolor=dvipsnames, handout]{beamer} % handout option for non-animated slides
 % 1 hour R intro course
 % Berry Boessenkool, Potsdam University, Germany
 % berry-b@gmx.de
@@ -7,7 +8,6 @@
 % Rstudio - Tools - Global Options - Sweave - weave Rnw files using: knitr
 
 
-\documentclass[compress, xcolor=dvipsnames]{beamer} % handout option for non-animated slides
 \setbeamerfont{frametitle}{size=\normalsize}
 
 \usepackage{hyperref, graphicx}
@@ -41,7 +41,7 @@
   \parbox{\linewidth}{\vspace*{-12pt}
   \textcolor{black}{
    % \scriptsize
-  ~~ Berry Boessenkool: 1 hour R intro ~~~~~
+  ~~ Berry Boessenkool: short R intro ~~~~~
   \href{https://github.com/brry/hour}{github.com/brry/hour} \hfill
   ~~ \insertframenumber / \inserttotalframenumber~~~~~~~~~}}}
 
@@ -93,7 +93,7 @@
 % ---------------------------
 
 <<setup, include=FALSE>>=
-opts_chunk$set(cache=T, echo=TRUE, fig.height=3.3, fig.width=5, out.width='0.9\\textwidth')
+knitr::opts_chunk$set(cache=T, echo=TRUE, fig.height=3.3, fig.width=5, out.width='0.9\\textwidth')
 @
 
 % ---------------------------
@@ -108,11 +108,11 @@ opts_chunk$set(cache=T, echo=TRUE, fig.height=3.3, fig.width=5, out.width='0.9\\
 \Large
 \vspace{1em}
 \includegraphics[width=0.8cm]{fig_extern/Rlogo.png}
-\textbf{introduction\\[0.8em] \large start your programming\\journey in 1 hour}
+\textbf{introduction\\[0.8em] \large start your programming\\journey in a few hours}
 \end{textblock*}
 \normalsize
 \vspace{10em}
-Berry Boessenkool, June 2018 + April 2019\\[0.5em]
+Berry Boessenkool, June 2018 - Oct 2020\\[0.5em]
 \texttt{berry-b@gmx.de}\\[0.5em]
 \href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
 \scriptsize
@@ -152,7 +152,7 @@ ENCOURAGED\\[0.5em]%
 \hrulefill
 \vspace{0.25em}
 \item \includegraphics[width=0.7cm]{fig_extern/Rlogo.png} \onslide<+->is free, \onslide<+->open source, \onslide<+->has a large user community, \onslide<+-> will make your work efficient and productive \onslide<+-> and is the standard for data analysis in many universities and industries
-\item R installation instructions: \href{https://github.com/brry/course\#install}{github.com/brry/course\#install}\\
+\item R installation instructions: \href{https://bookdown.org/brry/course/install.html}{bookdown.org/brry/course\#install}\\
 \hrulefill
 \item Today: \onslide<+-> wide but shallow introduction, no deep understanding
 \item Brief inputs followed by short exercises (for max learning)
@@ -380,8 +380,8 @@ plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck",
      main="Der maximale Dampfdruck ist Temperatur-limitiert
      (Korrelation Tagesmittelwerte Potsdam 2018-2019, DWD)",
      las=1, pch=3, cex=2, col="red", cex.main=0.9)
-#
-#
+ 
+ 
 # install.packages("berryFunctions")
 plot(clim$MESS_DATUM, clim$TXK, type="l", xlab="", xaxt="n", las=1, lwd=3)
 berryFunctions::monthAxis()
@@ -483,32 +483,12 @@ for(var in meta$Par)
 %------------------------------------------------------------%
 
 \begin{frame}[fragile]{Selected resources}
-\vspace{-1em}
-\onslide<+-> Books:
 \begin{itemize}[<+->]
-\item Grolemund \& Wickham (2017) \href{http://r4ds.had.co.nz/}{R for Data Science}
-\item J. Adler (2010): R in a Nutshell
-\item U. Ligges (2008): Programmieren mit R (German)
-\end{itemize}
-
-\onslide<+-> Tutorials:
-\begin{itemize}[<+->]
-\item \href{http://www.edx.org/course/introduction-r-programming-microsoft-dat204x-0#!}{Microsoft + Datacamp} (best course I know of, with login, but free)
-\item \href{https://stat545.com/}{STAT 545}
+\item (online) Book: Grolemund \& Wickham (2017) - \href{http://r4ds.had.co.nz/}{R for Data Science}
 \item \href{https://github.com/brry/course}{github.com/brry/course}
-\end{itemize}
-
-\onslide<+-> Reference cards:
-\begin{itemize}[<+->]
-  \item \href{https://www.rstudio.com/wp-content/uploads/2016/09/r-cheat-sheet-1.pdf}{base} and
-        \href{https://www.rstudio.com/wp-content/uploads/2016/02/advancedR.pdf}{advanced} cheatsheets from
-        \href{https://www.rstudio.com/resources/cheatsheets/}{Rstudio}
-  \item \href{https://github.com/jonasstein/R-Reference-Card/raw/master/R-refcard.pdf}{RefCard} by Tom Short \& Jonas Stein
-\end{itemize}
-
-\onslide<+-> The internet:
-\begin{itemize}[<+->]
-  \item \href{www.StackOverflow.com}{StackOverflow} for programming questions $<$-- \alert{main resource}
+\item \href{https://github.com/jonasstein/R-Reference-Card/raw/master/R-refcard.pdf}{Reference Card} by Tom Short \& Jonas Stein
+\item \href{www.StackOverflow.com}{StackOverflow} for programming questions $<$-- \alert{main resource}
+\item More at \href{https://bookdown.org/brry/course/resources.html}{bookdown.org/brry/course/resources}
 \end{itemize}
 \end{frame}
 
