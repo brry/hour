@@ -1,8 +1,8 @@
 Get started with R in a few hours  
-Berry Boessenkool, <a href="https://brry.github.io/" target="_blank">brry.github.io</a>, June 2018 - May 2021
+Berry Boessenkool, [brry.github.io](https://brry.github.io/), June 2018 - May 2021
 
 Before your short R intro course, please
 
-- install R and R Studio, see my <a href="https://bookdown.org/brry/course/install.html" target="_blank">instructions</a>
-- download the course [material](https://github.com/brry/hour/raw/master/Material/Rintro.zip)
-- unzip it to a folder of your choice
+- install R and R Studio, see [instructions](https://bookdown.org/brry/course/install.html)
+- download the course [material](https://github.com/brry/hour/raw/master/Material/Rintro.zip) to a sensible location (`Downloads` is not one)
+- unzip it (the zip-file contains the folder `Rintro` with 4 files)
