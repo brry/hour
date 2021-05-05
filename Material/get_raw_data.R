@@ -25,7 +25,7 @@ str(clim)
 
 meta$Label <- paste0(meta$Kurz, "  [", meta$Einheit, "]")
 write.table(clim, file="Rintro/clim.txt", sep="\t", quote=FALSE, row.names=FALSE)
-write.table(meta, file="Rintro/meta.txt", sep=";", quote=FALSE, row.names=FALSE)
+write.table(meta, file="Rintro/meta.txt", sep=";", quote=FALSE, row.names=FALSE, fileEncoding="utf-8")
 
 
 # ZIP Ordner erstellen:
