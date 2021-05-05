@@ -93,7 +93,7 @@
 % ---------------------------
 
 <<setup, include=FALSE>>=
-knitr::opts_chunk$set(cache=T, echo=TRUE, fig.height=3.3, fig.width=5, out.width='0.9\\textwidth')
+knitr::opts_chunk$set(cache=FALSE, echo=TRUE, fig.height=3.3, fig.width=5, out.width='0.9\\textwidth')
 @
 
 % ---------------------------
@@ -112,7 +112,7 @@ knitr::opts_chunk$set(cache=T, echo=TRUE, fig.height=3.3, fig.width=5, out.width
 \end{textblock*}
 \normalsize
 \vspace{10em}
-Berry Boessenkool, June 2018 - Oct 2020\\[0.5em]
+Berry Boessenkool, June 2018 - May 2021\\[0.5em]
 \texttt{berry-b@gmx.de}\\[0.5em]
 \href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
 \scriptsize
@@ -246,7 +246,8 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 \begin{exercise}{Reading files}
 \begin{enumerate}
   \item Read the metadata file into R with the command \rcode{read.table}, again assigning it to an object with a good name.
-  \item You need to set the arguments \texttt{file}, \texttt{sep}, \texttt{header}, \texttt{stringsAsFactors}.\\
+  \item You need to set the arguments \texttt{file}, \texttt{sep}, \texttt{header}\\
+        and on R $<$ 4.0.0 (2020-04-24) also \texttt{stringsAsFactors}.\\
         Again: use the documentation to find out what settings are needed!
   \item \rcode{str(YourObject)} must yield 5 chr (character) columns
   \item BONUS: what does \rcode{tail(clim)} return?
@@ -374,14 +375,15 @@ plot(clim$MESS_DATUM, clim$TXK, type="l", main="Saisonalitaet sichtbar")
 %------------------------------------------------------------%
 
 \begin{frame}[fragile]{Plotting live demo I}
-<<plot_live, fig.show="hide", size="scriptsize", fig.height=3.0>>=
+<<plot_live1, fig.show="hide", size="scriptsize", fig.height=3.0>>=
 par(mar=c(3,3,2,1), mgp=c(1.9,0.7,0))
 plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
      main="Der maximale Dampfdruck ist Temperatur-limitiert
      (Korrelation Tagesmittelwerte Potsdam 2018-2019, DWD)",
      las=1, pch=3, cex=2, col="red", cex.main=0.9)
- 
- 
+@
+\vspace{-1em}
+<<plot_live2, fig.show="hide", size="scriptsize", fig.height=3.0>>=
 # install.packages("berryFunctions")
 plot(clim$MESS_DATUM, clim$TXK, type="l", xlab="", xaxt="n", las=1, lwd=3)
 berryFunctions::monthAxis()
@@ -391,13 +393,13 @@ berryFunctions::monthAxis()
 %------------------------------------------------------------%
 
 \begin{frame}[fragile]{Plotting live demo II}
-\includegraphics[width=\textwidth]{figure/plot_live-1.pdf}
+\includegraphics[width=\textwidth]{figure/plot_live1-1.pdf}
 \end{frame}
 
 %------------------------------------------------------------%
 
 \begin{frame}[fragile]{Plotting live demo III}
-\includegraphics[width=\textwidth]{figure/plot_live-2.pdf}
+\includegraphics[width=\textwidth]{figure/plot_live2-1.pdf}
 \end{frame}
 
 %------------------------------------------------------------%
