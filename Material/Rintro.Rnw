@@ -65,8 +65,8 @@
 \newcommand{\bildlinkt}[2]{\flushleft{\tiny \href{#1}{\textcolor{gray}{#2}} \normalsize }}
 
 % format inline R command names in blue courier:
-\newcommand{\rcode}[1]{\texttt{\textcolor{Blue}{#1}}} % or use Blue
-\newcommand{\key}[1]{\colorbox{gray!30}{\texttt{\textcolor{Blue}{#1}}}}
+\newcommand{\rcode}[1]{\colorbox{gray!15}{\texttt{\textcolor{Blue}{\mathstrut#1}}}}
+\newcommand{\key}[1]  {\colorbox{Melon!50}{\textbf{\texttt{\textcolor{Red} {#1}}}}}
 
 % Nice appendix numbering:
 \newcommand{\appendixbegin}{
@@ -112,7 +112,7 @@ knitr::opts_chunk$set(cache=FALSE, echo=TRUE, fig.height=3.3, fig.width=5, out.w
 \end{textblock*}
 \normalsize
 \vspace{10em}
-Berry Boessenkool, June 2018 - May 2021\\[0.5em]
+Berry Boessenkool, June 2018 - April 2022\\[0.5em]
 \texttt{berry-b@gmx.de}\\[0.5em]
 \href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
 \scriptsize
@@ -120,14 +120,14 @@ Berry Boessenkool, June 2018 - May 2021\\[0.5em]
 \normalsize
 \TPshowboxesfalse % no border around this box
  % photography note and licence
-\begin{textblock*}{8em}(230pt,30pt) % topleft corner x=230pt, y=30pt
+\begin{textblock*}{8em}(230pt,50pt) % topleft corner x=230pt, y=30pt
 \centering
-\textblockcolour{Dandelion}
+% \textblockcolour{Dandelion}
 \vspace{0.5em}
-\includegraphics[width=3em]{fig_extern/camera2.png}\\
-\footnotesize
-ENCOURAGED\\[0.5em]%
-\includegraphics[width=6em]{fig_extern/ccby.png}\\[-0.3em]
+% \includegraphics[width=3em]{fig_extern/camera2.png}\\
+\scriptsize
+% ENCOURAGED\\[0.5em]%
+\includegraphics[width=4em]{fig_extern/ccby.png}\\[-0.3em]
 \href{https://creativecommons.org/licenses/by/4.0}{use freely, cite me}%
 \normalsize
 \vspace{0.5em}
@@ -145,7 +145,7 @@ ENCOURAGED\\[0.5em]%
 \begin{itemize}[<+->]
 \vspace{-1em}
 \item Geoecology @ Potsdam University
-\item R Fan\onslide<+->atic \onslide<+-> since 2010
+\item R Fan\only<+| handout:0>{atic} \onslide<+-> since 2010
 \item R packages \href{https://github.com/brry/rdwd\#rdwd}{\includegraphics[width=0.5cm,valign=c]{fig_extern/hex.png}}
 , \onslide<+-> training \& consulting \href{https://brry.github.io}{\includegraphics[width=0.5cm,valign=c]{fig_extern/Blogo.png}}
 , \onslide<+-> community \href{https://www.meetup.com/de-DE/Berlin-R-Users-Group/}{\includegraphics[width=3em,valign=c]{fig_extern/BRUG_full.png}}\\
@@ -154,9 +154,8 @@ ENCOURAGED\\[0.5em]%
 \item \includegraphics[width=0.7cm]{fig_extern/Rlogo.png} \onslide<+->is free, \onslide<+->open source, \onslide<+->has a large user community, \onslide<+-> will make your work efficient and productive \onslide<+-> and is the standard for data analysis in many universities and industries
 \item R installation instructions: \href{https://bookdown.org/brry/course/install.html}{bookdown.org/brry/course\#install}\\
 \hrulefill
-\item Today: \onslide<+-> wide but shallow introduction, no deep understanding
+\item Wide but shallow introduction, no deep understanding
 \item Brief inputs followed by short exercises (for max learning)
-\item \alert{Don't hesitate to ask the helpers}
 \item \alert{If we're proceeding too fast, please interrupt!}
 \end{itemize}
 \end{frame}
@@ -204,8 +203,8 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 \vspace{-1em}
 \pause
 \begin{itemize}[<+->]
-  \item objects: assign with ~ \rcode{$<-$} ~ Rstudio Keyboard shortcut:  \key{ALT} + \key{-}  \\
-        \rcode{nstudents <- 15\\nstudents\\nstudents > 12}
+  \item objects: assign with ~\rcode{$<-$}~ Rstudio keyboard shortcut:  \key{ALT} + \key{-}  \\
+        \rcode{nstudents <- 15}\\\rcode{nstudents}\\\rcode{nstudents > 12}
   \item What's a good object name? \onslide<+-> $\rightarrow$ short, but explanatory;
         \onslide<+-> lowerCamelStandard\_or\_underscore are good naming conventions
   \item comments: \texttt{\textcolor[rgb]{0,0.392,0}{\# everything after a hashtag is not executed.}}

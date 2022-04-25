@@ -14,7 +14,7 @@ library(rdwd) # See intro at https://github.com/brry/rdwd#rdwd
 
 # Data ----
 link <- selectDWD("Potsdam", res="daily", var="kl", per="recent")
-file <- dataDWD(link, read=FALSE, force=NA, overwrite=TRUE)
+file <- dataDWD(link, read=FALSE, force=NA, overwrite=TRUE, dir="DWDdata")
 clim <- readDWD(file)
 meta <- readVars(file)
 
