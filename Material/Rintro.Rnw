@@ -227,7 +227,7 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
         @
   \item If R tells you "no such file" exists, check the output of \rcode{dir()}.
   \item Check the object with \rcode{head(YourObject)}.
-  \item \rcode{str(YourObject)} must yield 19 columns with data types: \texttt{int, factor, num}.
+  \item \rcode{str(YourObject)} must yield 19 columns with data types: \texttt{int, char, num}.
   \item Use the documentation to find out settings for the arguments:\\
         <<readfile2, eval=F>>=
         help(read.table)   ;   ?read.table   #   or press F1.
@@ -425,7 +425,7 @@ xaxt="n" # axis type (none to suppress axis)
 
 % ---------------------------
 
-\begin{frame}[fragile]{Preparing for for loops}
+\begin{frame}[fragile]{Preparing for \rcode{for} loops}
 Please give your metadata rownames as follows:
 <<metarownames>>=
 rownames(meta) <- meta$Par
