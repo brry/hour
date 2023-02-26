@@ -78,7 +78,11 @@
    \addtocounter{framenumber}{\value{framenumberappendix}}
 }
 
-
+% Reduce space between code and output (https://stackoverflow.com/a/41468059):
+\setlength{\OuterFrameSep}{0pt}
+\makeatletter
+\preto{\@verbatim}{\topsep=5pt \partopsep=5pt }
+\makeatother
 
 % ACTUAL SLIDES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -101,20 +105,19 @@ knitr::opts_chunk$set(cache=FALSE, echo=TRUE, fig.height=3.3, fig.width=5, out.w
 {\usebackgroundtemplate{\includegraphics[width=\paperwidth]{fig_extern/slidebg-1.pdf}}
 \begin{frame}%[plain]
 \begin{center}
-\vspace{1em}
 \TPshowboxesfalse % no border around this box
 \begin{textblock*}{18em}(10pt,30pt) % topleft corner x=10pt, y=30pt
 \centering
 \Large
-\vspace{1em}
+\vspace{3em}
 \includegraphics[width=0.8cm]{fig_extern/Rlogo.png}
 \textbf{introduction\\[0.8em] \large start your programming\\journey in a few hours}
 \end{textblock*}
 \normalsize
-\vspace{10em}
-Berry Boessenkool, June 2018 - April 2022\\[0.5em]
+\vspace{12em}
+Berry Boessenkool, June 2018 - Feb 2023\\[0.5em]
 \texttt{berry-b@gmx.de}\\[0.5em]
-\href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
+% \href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
 \scriptsize
 \textit{Presentation template generated with} \rcode{berryFunctions::createPres}\\
 \normalsize
@@ -123,11 +126,11 @@ Berry Boessenkool, June 2018 - April 2022\\[0.5em]
 \begin{textblock*}{8em}(230pt,50pt) % topleft corner x=230pt, y=30pt
 \centering
 % \textblockcolour{Dandelion}
-\vspace{0.5em}
+\vspace{4em}
 % \includegraphics[width=3em]{fig_extern/camera2.png}\\
-\scriptsize
+\tiny
 % ENCOURAGED\\[0.5em]%
-\includegraphics[width=4em]{fig_extern/ccby.png}\\[-0.3em]
+\includegraphics[width=6em]{fig_extern/ccby.png}\\[-0.3em]
 \href{https://creativecommons.org/licenses/by/4.0}{use freely, cite me}%
 \normalsize
 \vspace{0.5em}
@@ -142,6 +145,7 @@ Berry Boessenkool, June 2018 - April 2022\\[0.5em]
 % ---------------------------
 
 \begin{frame}{\rcode{print("Hello world!")}}
+\pause
 \begin{itemize}[<+->]
 \vspace{-1em}
 \item Geoecology @ Potsdam University
@@ -151,7 +155,7 @@ Berry Boessenkool, June 2018 - April 2022\\[0.5em]
 , \onslide<+-> community \href{https://www.meetup.com/de-DE/Berlin-R-Users-Group/}{\includegraphics[width=3em,valign=c]{fig_extern/BRUG_full.png}}\\
 \hrulefill
 \vspace{0.25em}
-\item \includegraphics[width=0.7cm]{fig_extern/Rlogo.png} \onslide<+->is free, \onslide<+->open source, \onslide<+->has a large user community, \onslide<+-> will make your work efficient and productive \onslide<+-> and is the standard for data analysis in many universities and industries
+\item \includegraphics[width=0.7cm]{fig_extern/Rlogo.png} \onslide<+->is free, \onslide<+->open source, \onslide<+->has a large user community, \onslide<+-> will make your work efficient and productive \onslide<+-> and is the standard for data analysis and visualisation in many universities and industries
 \item R installation instructions: \href{https://bookdown.org/brry/course/install.html}{bookdown.org/brry/course\#install}\\
 \hrulefill
 \item Wide but shallow introduction, no deep understanding
@@ -164,9 +168,17 @@ Berry Boessenkool, June 2018 - April 2022\\[0.5em]
 
 \begin{frame}{Integrated Development Environment (IDE): RStudio}
 \begin{figure}
-\includegraphics[width=0.95\textwidth]{fig_extern/Rstudio2.png}
+\includegraphics[width=0.95\textwidth]{fig_extern/rstudio_overview_en.png}
 \end{figure}
 \label{rstudio}
+\end{frame}
+
+% ---------------------------
+
+\begin{frame}{Run code from a script}
+\begin{figure}
+\includegraphics[width=0.95\textwidth]{fig_extern/rstudio_send_code_en.png}
+\end{figure}
 \end{frame}
 
 % ---------------------------
@@ -195,12 +207,10 @@ Berry Boessenkool, June 2018 - April 2022\\[0.5em]
 In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\\
 \textit{If you don't know how to compute a square root in R, you can google it!}
 \end{exercise}
-\vspace{-1em}
 \pause
 <<sol_Rcalc, eval=F>>=
 21+21 ; 7*6 ; 0.3/4*sqrt(313600)
 @
-\vspace{-1em}
 \pause
 \begin{itemize}[<+->]
   \item objects: assign with ~\rcode{$<-$}~ Rstudio keyboard shortcut:  \key{ALT} + \key{-}  \\
@@ -268,11 +278,9 @@ clim <- read.table(file="Rintro/clim.txt", header=TRUE)
 meta <- read.table(file="Rintro/meta.txt", header=TRUE, 
                    sep=";", stringsAsFactors=FALSE)
 @
-\vspace{-0.9em}
 In the slide source code, I created a copy of \rcode{clim} with fewer columns
 to improve printing in the slides. 
 Whenever I use \rcode{Clim} with a capital C, you can use your normal object:
-\vspace{-0.9em}
 <<solreadfile2, echo=-1>>=
 Clim <- clim[,1:7]
 tail(Clim) # last rows of an object
@@ -301,7 +309,7 @@ tail(Clim) # last rows of an object
   \item The column UPM (relative humidity)
   \item BONUS 1: The maximum sunshine duration (SDK)
   \item BONUS 2: What command do you need to get the number of rows?
-  \item BONUS 3: What is better and worse in \rcode{DF[ ,"name"]} vs \rcode{DF[ ,3]}?
+  \item BONUS 3: What is better in \rcode{DF[ ,"name"]} vs \rcode{DF[ ,3]}?
   \end{enumerate}
 \end{exercise}
 \end{frame}
@@ -309,7 +317,7 @@ tail(Clim) # last rows of an object
 %------------------------------------------------------------%
 
 \begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: subsetting data.frames}
-\vspace{-2em}
+% \vspace{-2em}
 <<sol_subset, eval=T, echo=-(1:2), size="scriptsize">>=
 options(width=80)
 Clim <- head(clim, 20)
@@ -318,9 +326,54 @@ Clim$UPM
 max(clim$SDK)  ;   max(clim[ ,"SDK"])
 nrow(clim)
 @
-\vspace{-0.9em}
 \rcode{DF[ ,"name"]} is easier to understand for humans and still returns the same if the order of the columns is changed.
 But it needs more typing.
+\end{frame}
+
+% ---------------------------
+
+
+\section{packages}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Installing R packages with additional functionality}
+\pause
+Download and install:
+<<packages_install, eval=FALSE>>=
+install.packages("ggplot2")
+@
+\pause
+Needs to be executed only once, does not need admin rights.\\
+\pause
+Can also be done manually (with no typos) in Rstudio:
+\pause
+\includegraphics[width=0.5\textwidth]{fig_extern/rstudio_pack.png}\\
+\end{frame}
+
+% ---------------------------
+
+\begin{frame}[fragile]{Using R packages}
+Load from local library:
+<<packages_library, eval=FALSE>>=
+library("ggplot2")
+@
+\pause Needed in every new R session.\\
+\pause Should be in the script for it to be reproducible.\\
+\pause After that the functions from the package are directly usable.\\[1em]
+\pause For functions with the same name in multiple packages, the one that was loaded last is used.\\
+\pause To make it clear from which package a function is used, the \rcode{package::function()} structure
+\pause
+<<packages_colon1, eval=FALSE>>=
+rdwd::findID("Potsdam")
+@
+\pause
+is clear + unambiguous, and hence safer than
+\pause
+<<packages_colon2, eval=FALSE>>=
+library(rdwd)
+findID("Potsdam")
+@
 \end{frame}
 
 % ---------------------------
@@ -331,9 +384,9 @@ But it needs more typing.
 
 \begin{frame}[fragile]{Plotting}
 General code for scatterplots: \rcode{plot(x, y, ...)}
-\pause
+\pause \vspace{0.4em}
 <<plot_indo1, echo=-1, fig.height=2.5>>=
-par(mar=c(2.8,2.8,1.5,0), mgp=c(1.8,0.7,0))
+par(mar=c(2.8,2.8,2,0), mgp=c(1.8,0.7,0))
 plot(x=Indometh$time, y=Indometh$conc,
      col="orange", pch=16, main="Awesome Graph!")
 @
@@ -362,11 +415,10 @@ clim$MESS_DATUM <- as.Date(clim$MESS_DATUM, format="%Y-%m-%d")
 %------------------------------------------------------------%
 
 \begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: Scatterplots, line plots}
-\vspace{-0.5em}
 <<sol_plot, eval=T, echo=-1, size="scriptsize", fig.height=2.5>>=
 par(mfrow=c(1,2), mgp=c(2,0.7,0), mar=c(3,3,2,1), las=1, cex.main=0.8)
 plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
-     main="Korrelation Tagesmittelwerte\nPotsdam 2018-2019, DWD")
+     main="Korrelation Tagesmittelwerte\nPotsdam 2022-2023, DWD")
 plot(clim$MESS_DATUM, clim$TXK, type="l", main="Saisonalitaet sichtbar")
 @
 \end{frame}
@@ -378,10 +430,10 @@ plot(clim$MESS_DATUM, clim$TXK, type="l", main="Saisonalitaet sichtbar")
 par(mar=c(3,3,2,1), mgp=c(1.9,0.7,0))
 plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
      main="Der maximale Dampfdruck ist Temperatur-limitiert
-     (Korrelation Tagesmittelwerte Potsdam 2018-2019, DWD)",
+     (Korrelation Tagesmittelwerte Potsdam 2022-2023, DWD)",
      las=1, pch=3, cex=2, col="red", cex.main=0.9)
 @
-\vspace{-1em}
+\vspace{0.1em}
 <<plot_live2, fig.show="hide", size="scriptsize", fig.height=3.0>>=
 # install.packages("berryFunctions")
 plot(clim$MESS_DATUM, clim$TXK, type="l", xlab="", xaxt="n", las=1, lwd=3)
@@ -486,10 +538,11 @@ for(var in meta$Par)
 \begin{frame}[fragile]{Selected resources}
 \begin{itemize}[<+->]
 \item (online) Book: Grolemund \& Wickham (2017) - \href{http://r4ds.had.co.nz/}{R for Data Science}
-\item \href{https://github.com/brry/course}{github.com/brry/course}
+\item German book: Uwe Ligges (2005) - Programmieren mit R
+\item \href{https://bookdown.org/brry/course/}{bookdown.org/brry/course}
 \item \href{https://github.com/jonasstein/R-Reference-Card/raw/master/R-refcard.pdf}{Reference Card} by Tom Short \& Jonas Stein
-\item \href{www.StackOverflow.com}{StackOverflow} for programming questions $<$-- \alert{main resource}
-\item More at \href{https://bookdown.org/brry/course/resources.html}{bookdown.org/brry/course/resources}
+\item \href{https://stackoverflow.com/questions/tagged/r}{StackOverflow} for programming questions $<$-- \alert{main resource}
+% \item More at \href{https://bookdown.org/brry/course/resources.html}{bookdown.org/brry/course/resources}
 \end{itemize}
 \end{frame}
 
