@@ -1,5 +1,5 @@
 Get started with R in a few hours  
-Berry Boessenkool, [brry.github.io](https://brry.github.io/), June 2018 - April 2022
+Berry Boessenkool, [brry.github.io](https://brry.github.io/), June 2018 - March 2023
 
 Before your short R intro course, please
 

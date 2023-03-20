@@ -115,7 +115,7 @@ knitr::opts_chunk$set(cache=FALSE, echo=TRUE, fig.height=3.3, fig.width=5, out.w
 \end{textblock*}
 \normalsize
 \vspace{12em}
-Berry Boessenkool, June 2018 - Feb 2023\\[0.5em]
+Berry Boessenkool, June 2018 - March 2023\\[0.5em]
 \texttt{berry-b@gmx.de}\\[0.5em]
 % \href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
 \scriptsize
