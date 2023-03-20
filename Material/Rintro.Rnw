@@ -186,15 +186,15 @@ Berry Boessenkool, June 2018 - Feb 2023\\[0.5em]
 \begin{frame}{Preparation for the rest of the course}
 \begin{exercise}{Set up folder and script}
 \begin{enumerate}%[<+->]
-  \item Download the course \href{https://github.com/brry/hour/raw/master/Material/Rintro.zip}{material}.
-  \item Unzip it into a folder of your choice.
+  \item Download the course \href{https://github.com/brry/hour/raw/master/Material/Rintro.zip}{material} to a suitable folder.
+  \item Unzip it (contains folder with files -$>$ 'unzip here').
   \item Open the \texttt{script\_intro.R} file with Rstudio.
   \item Tell R where to look for data through\\ 
         Rstudio: Session - Set Working Directory - To Source File Location
   \item Copy the command thus sent to the console into the beginning of the script. 
         This makes it reproducible later on.\\
         \rcode{setwd("C:/path/to/input")} {\footnotesize \texttt{\textcolor[rgb]{0,0.392,0}{ \# change back- to forwardslashes}}}\\
-  \item Have a look at the \texttt{clim} and \texttt{meta} files. You can do this within Rstudio. ;-) 
+  \item Have a look at the \texttt{clim} and \texttt{meta} files. You can do this within Rstudio in the bottomright "Files" panel. ;-) 
 \end{enumerate}
 \end{exercise}
 \end{frame}
@@ -251,7 +251,21 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 
 % ---------------------------
 
-\begin{frame}{Reading files into R}
+\begin{frame}[fragile]{Reading files into R}
+\vspace{-0.4em}
+\pause
+<<solreadmeta_display, eval=FALSE, size="small">>=
+read.table(text="
+this is one column, another, and_the_last
+1                 , 2      , 3                ")
+@
+\pause \vspace{-0.6em}
+<<solreadmeta_actual, echo=FALSE, size="small">>=
+message("Error in scan( [...] : line 2 did not have 6 elements")
+@
+\pause This error means columns are incorrectly detected, by default split at\\
+\pause \small \key{this ~-~ is ~-~ one ~-~ column, ~-~ another, ~-~ and\_the\_last} \normalsize
+\pause
 \begin{exercise}{Reading files}
 \begin{enumerate}
   \item Read the metadata file into R with the command \rcode{read.table}, again assigning it to an object with a good name.
@@ -382,6 +396,21 @@ findID("Potsdam")
 
 % ---------------------------
 
+\begin{frame}[fragile]{Plotting documentation}
+\pause
+There are several packages with a \rcode{plot} function, so opening the documentation shows several options (all loaded packages):
+\pause
+<<plot_help1>>=
+?plot
+@
+\pause \vspace{0.6em}
+\includegraphics[width=8cm]{fig_extern/rstudio_help_plot.png}\\
+\pause \vspace{0.6em}
+Select the \rcode{plot.default} function from the \rcode{{graphics}} package.
+\end{frame}
+
+% ---------------------------
+
 \begin{frame}[fragile]{Plotting}
 General code for scatterplots: \rcode{plot(x, y, ...)}
 \pause \vspace{0.4em}
@@ -395,13 +424,14 @@ plot(x=Indometh$time, y=Indometh$conc,
 % ---------------------------
 
 \begin{frame}[fragile]{Plotting}
-Please convert the date column with 
-<<dateconv, size="small">>=
-clim$MESS_DATUM <- as.Date(clim$MESS_DATUM, format="%Y-%m-%d")
-@
 \pause
 \begin{exercise}{Scatterplots, line plots}
 \begin{enumerate}
+  \item Convert the date column with 
+<<dateconv, size="small">>=
+clim$MESS_DATUM <- as.Date(clim$MESS_DATUM)
+# this uses format="%Y-%m-%d"
+@
   \item Generate a figure with \rcode{plot(clim\$VPM, clim\$TMK)}
   \item Improve the axis labels. Use the metadata to figure out the column name meanings.
   \item BONUS: Add an informative graph title
