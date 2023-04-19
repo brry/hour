@@ -115,7 +115,7 @@ knitr::opts_chunk$set(cache=FALSE, echo=TRUE, fig.height=3.3, fig.width=5, out.w
 \end{textblock*}
 \normalsize
 \vspace{12em}
-Berry Boessenkool, June 2018 - March 2023\\[0.5em]
+Berry Boessenkool, June 2018 - April 2023\\[0.5em]
 \texttt{berry-b@gmx.de}\\[0.5em]
 % \href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
 \scriptsize
@@ -188,13 +188,11 @@ Berry Boessenkool, June 2018 - March 2023\\[0.5em]
 \begin{enumerate}%[<+->]
   \item Download the course \href{https://github.com/brry/hour/raw/master/Material/Rintro.zip}{material} to a suitable folder.
   \item Unzip it (contains folder with files -$>$ 'unzip here').
-  \item Open the \texttt{script\_intro.R} file with Rstudio.
-  \item Tell R where to look for data through\\ 
-        Rstudio: Session - Set Working Directory - To Source File Location
-  \item Copy the command thus sent to the console into the beginning of the script. 
-        This makes it reproducible later on.\\
-        \rcode{setwd("C:/path/to/input")} {\footnotesize \texttt{\textcolor[rgb]{0,0.392,0}{ \# change back- to forwardslashes}}}\\
-  \item Have a look at the \texttt{clim} and \texttt{meta} files. You can do this within Rstudio in the bottomright "Files" panel. ;-) 
+  \item Open Rstudio, click "File" -$>$ "New Project" -$>$ "Existing directory", select your folder, click "Create Project".
+  \item Check that Rstudio now has the project name in the topright (instead of "Project: None").
+  \item In the bottomright "Files" panel, open the \texttt{script\_intro.R} file.
+  \item Have a look at the \texttt{clim} and \texttt{meta} files. You can also do this within Rstudio. ;-) 
+  \item BONUS: Change Rstudio settings, see \href{https://bookdown.org/brry/course/settings.html}{bookdown.org/brry/course - settings}
 \end{enumerate}
 \end{exercise}
 \end{frame}
@@ -218,7 +216,6 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
   \item What's a good object name? \onslide<+-> $\rightarrow$ short, but explanatory;
         \onslide<+-> lowerCamelStandard\_or\_underscore are good naming conventions
   \item comments: \texttt{\textcolor[rgb]{0,0.392,0}{\# everything after a hashtag is not executed.}}
-  \item Rstudio scripts: Send line/selection to R console:  \key{CTRL} + \key{ENTER}
 \end{itemize}
 \end{frame}
 
@@ -270,10 +267,10 @@ message("Error in scan( [...] : line 2 did not have 6 elements")
 \begin{enumerate}
   \item Read the metadata file into R with the command \rcode{read.table}, again assigning it to an object with a good name.
   \item You need to set the arguments \texttt{file}, \texttt{sep}, \texttt{header}\\
-        and on R $<$ 4.0.0 (2020-04-24) also \texttt{stringsAsFactors}.\\
+        \footnotesize and on R $<$ 4.0.0 (2020-04-24) also \texttt{stringsAsFactors}\normalsize.\\
         Again: use the documentation to find out what settings are needed!
   \item \rcode{str(YourObject)} must yield 5 chr (character) columns
-  \item BONUS: what does \rcode{tail(clim)} return?
+  \item BONUS: what does \rcode{tail(YourObject)} return?
 \end{enumerate}
 \end{exercise}
 \end{frame}
