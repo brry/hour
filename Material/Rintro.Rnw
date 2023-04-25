@@ -424,17 +424,17 @@ plot(x=Indometh$time, y=Indometh$conc,
 \pause
 \begin{exercise}{Scatterplots, line plots}
 \begin{enumerate}
+  \item Generate a figure with \rcode{plot(clim\$VPM, clim\$TMK)}
+  \item Improve the axis labels. Read the documentation to find the needed arguments. Use the metadata to figure out the column name meanings.
   \item Convert the date column with 
 <<dateconv, size="small">>=
 clim$MESS_DATUM <- as.Date(clim$MESS_DATUM)
 # this uses format="%Y-%m-%d"
 @
-  \item Generate a figure with \rcode{plot(clim\$VPM, clim\$TMK)}
-  \item Improve the axis labels. Use the metadata to figure out the column name meanings.
-  \item BONUS: Add an informative graph title
   \item Plot a time series of the daily temperature maximum. 
         What value do you need to give to the argument \texttt{type}? 
         Again, use the documentation of \rcode{?plot()} to find out.
+  \item BONUS: Add informative graph titles to both plots.
 \end{enumerate}
 \end{exercise}
 \end{frame}
@@ -505,12 +505,12 @@ xaxt="n" # axis type (none to suppress axis)
 % ---------------------------
 
 \begin{frame}[fragile]{Preparing for \rcode{for} loops}
-Please give your metadata rownames as follows:
-<<metarownames>>=
-rownames(meta) <- meta$Par
-@
 \begin{exercise}{using objects to subset}
 \begin{enumerate}
+  \item Please give your metadata rownames as follows:
+  <<metarownames>>=
+rownames(meta) <- meta$Par
+@
   \item Create an object \rcode{var} with the character string \rcode{"FX"}.
   \item Get the meta value for row \rcode{var} and column \rcode{"Label"}.
   \item Plot the \rcode{var} column of \rcode{clim} as a time series.
