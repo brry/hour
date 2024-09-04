@@ -1,6 +1,6 @@
 \documentclass[compress, xcolor=dvipsnames, handout]{beamer} % handout option for non-animated slides
-% 1 hour R intro course
-% Berry Boessenkool, Potsdam University, Germany
+% R intro course for a few hours
+% Berry Boessenkool, Potsdam University and Hasso Plattner Institute, Germany
 % berry-b@gmx.de
 
 
@@ -79,9 +79,9 @@
 }
 
 % Reduce space between code and output (https://stackoverflow.com/a/41468059):
-\setlength{\OuterFrameSep}{0pt}
+\setlength{\OuterFrameSep}{-4pt}
 \makeatletter
-\preto{\@verbatim}{\topsep=5pt \partopsep=5pt }
+\preto{\@verbatim}{\topsep=-10pt \partopsep=-10pt }
 \makeatother
 
 % ACTUAL SLIDES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -98,6 +98,11 @@
 
 <<setup, include=FALSE>>=
 knitr::opts_chunk$set(cache=FALSE, echo=TRUE, fig.height=3.3, fig.width=5, out.width='0.9\\textwidth')
+knitr::knit_hooks$set(chunk = function(x, options) {
+  out <- knitr::hooks_latex()$chunk(x, options)
+  if(isTRUE(options$pauseresult)) out <- sub("\\begin{verbatim}", "\\pause \\begin{verbatim}", out, fixed=TRUE)
+  out
+  })
 @
 
 % ---------------------------
@@ -115,7 +120,7 @@ knitr::opts_chunk$set(cache=FALSE, echo=TRUE, fig.height=3.3, fig.width=5, out.w
 \end{textblock*}
 \normalsize
 \vspace{12em}
-Berry Boessenkool, June 2018 - April 2023\\[0.5em]
+Berry Boessenkool, June 2018 - Sept 2024\\[0.5em]
 \texttt{berry-b@gmx.de}\\[0.5em]
 % \href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
 \scriptsize
@@ -160,13 +165,14 @@ Berry Boessenkool, June 2018 - April 2023\\[0.5em]
 \hrulefill
 \item Wide but shallow introduction, no deep understanding
 \item Brief inputs followed by short exercises (for max learning)
-\item \alert{If we're proceeding too fast, please interrupt!}
+% \item \alert{If we're proceeding too fast, please interrupt!} % for live classes :)
 \end{itemize}
 \end{frame}
 
 % ---------------------------
 
 \begin{frame}{Integrated Development Environment (IDE): RStudio}
+\pause
 \begin{figure}
 \includegraphics[width=0.95\textwidth]{fig_extern/rstudio_overview_en.png}
 \end{figure}
@@ -225,7 +231,8 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 
 % ---------------------------
 
-\begin{frame}[fragile]{Reading files into R, opening the help documentation}
+\begin{frame}[fragile]{Reading files into R, opening the function documentation}
+\pause
 \begin{itemize}[<+->]
   \item Read the climate data file into R with the command \rcode{read.table}
   \item Assign it to an object with a good name\\ \onslide<+->
@@ -256,7 +263,7 @@ read.table(text="
 this is one column, another, and_the_last
 1                 , 2      , 3                ")
 @
-\pause \vspace{-0.6em}
+\pause % \vspace{-0.6em}
 <<solreadmeta_actual, echo=FALSE, size="small">>=
 message("Error in scan( [...] : line 2 did not have 6 elements")
 @
@@ -267,7 +274,7 @@ message("Error in scan( [...] : line 2 did not have 6 elements")
 \begin{enumerate}
   \item Read the metadata file into R with the command \rcode{read.table}, again assigning it to an object with a good name.
   \item You need to set the arguments \texttt{file}, \texttt{sep}, \texttt{header}\\
-        \footnotesize and on R $<$ 4.0.0 (2020-04-24) also \texttt{stringsAsFactors}\normalsize.\\
+        \footnotesize \textit{(on R $<$ 4.0.0 (2020-04-24) also \texttt{stringsAsFactors})}\normalsize.\\
         Again: use the documentation to find out what settings are needed!
   \item \rcode{str(YourObject)} must yield 5 chr (character) columns
   \item BONUS: what does \rcode{tail(YourObject)} return?
@@ -305,6 +312,7 @@ tail(Clim) # last rows of an object
 %------------------------------------------------------------%
 
 \begin{frame}{Objects: data.frames}
+\pause
 \vspace{-0.5em}
 \begin{itemize}[<+->]
   \item For tables with different data types (numbers, characters, categories, integers), R has the object type data.frame
@@ -328,7 +336,6 @@ tail(Clim) # last rows of an object
 %------------------------------------------------------------%
 
 \begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: subsetting data.frames}
-% \vspace{-2em}
 <<sol_subset, eval=T, echo=-(1:2), size="scriptsize">>=
 options(width=80)
 Clim <- head(clim, 20)
@@ -337,8 +344,10 @@ Clim$UPM
 max(clim$SDK)  ;   max(clim[ ,"SDK"])
 nrow(clim)
 @
+\vspace{1em}
 \rcode{DF[ ,"name"]} is easier to understand for humans and still returns the same if the order of the columns is changed.
-But it needs more typing.
+But it needs more typing.\\
+\rcode{DF\$name} is fast and safe from typos with the autocompletion in Rstudio but cannot be used in loops / functions with the name as input.
 \end{frame}
 
 % ---------------------------
@@ -365,6 +374,7 @@ Can also be done manually (with no typos) in Rstudio:
 % ---------------------------
 
 \begin{frame}[fragile]{Using R packages}
+\pause
 Load from local library:
 <<packages_library, eval=FALSE>>=
 library("ggplot2")
@@ -397,7 +407,7 @@ findID("Potsdam")
 \pause
 There are several packages with a \rcode{plot} function, so opening the documentation shows several options (all loaded packages):
 \pause
-<<plot_help1>>=
+<<plot_help1, eval=FALSE>>=
 ?plot
 @
 \pause \vspace{0.6em}
@@ -408,7 +418,8 @@ Select the \rcode{plot.default} function from the \rcode{{graphics}} package.
 
 % ---------------------------
 
-\begin{frame}[fragile]{Plotting}
+\begin{frame}[fragile]{Base R plotting command}
+\pause
 General code for scatterplots: \rcode{plot(x, y, ...)}
 \pause \vspace{0.4em}
 <<plot_indo1, echo=-1, fig.height=2.5>>=
@@ -420,8 +431,11 @@ plot(x=Indometh$time, y=Indometh$conc,
 
 % ---------------------------
 
-\begin{frame}[fragile]{Plotting}
+\begin{frame}[fragile]{Plotting exercise}
 \pause
+\key{Upon error "Figure margins too large",}\\
+\key{drag the Rstudio Plots panel bigger.}
+\pause \vspace{-0.4em}
 \begin{exercise}{Scatterplots, line plots}
 \begin{enumerate}
   \item Generate a figure with \rcode{plot(clim\$VPM, clim\$TMK)}
@@ -431,6 +445,7 @@ plot(x=Indometh$time, y=Indometh$conc,
 clim$MESS_DATUM <- as.Date(clim$MESS_DATUM)
 # this uses format="%Y-%m-%d"
 @
+\vspace{-0.1em}
   \item Plot a time series of the daily temperature maximum. 
         What value do you need to give to the argument \texttt{type}? 
         Again, use the documentation of \rcode{?plot()} to find out.
@@ -443,41 +458,34 @@ clim$MESS_DATUM <- as.Date(clim$MESS_DATUM)
 
 \begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: Scatterplots, line plots}
 <<sol_plot, eval=T, echo=-1, size="scriptsize", fig.height=2.5>>=
-par(mfrow=c(1,2), mgp=c(2,0.7,0), mar=c(3,3,2,1), las=1, cex.main=0.8)
-plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
-     main="Korrelation Tagesmittelwerte\nPotsdam 2022-2023, DWD")
-plot(clim$MESS_DATUM, clim$TXK, type="l", main="Saisonalitaet sichtbar")
+par(mfrow=c(1,2), mgp=c(2,0.7,0), mar=c(3,3,3,1), las=1, cex.main=0.8)
+plot(clim$TMK, clim$VPM, xlab="air temperature", ylab="vapor pressure", 
+     main="correlation daily averages\nPotsdam 2023-2024, DWD")
+
+plot(clim$MESS_DATUM, clim$TXK, type="l", main="seasonality visible")
+
 @
 \end{frame}
 
 %------------------------------------------------------------%
 
-\begin{frame}[fragile]{Plotting live demo I}
-<<plot_live1, fig.show="hide", size="scriptsize", fig.height=3.0>>=
+\begin{frame}[fragile]{Coding demo: create nice looking graphs}
+\pause %\vspace{0.2em}
+\tiny
+<<plot_live1, fig.height=1.8>>=
 par(mar=c(3,3,2,1), mgp=c(1.9,0.7,0))
-plot(clim$TMK, clim$VPM, xlab="Lufttemperatur", ylab="Dampfdruck", 
-     main="Der maximale Dampfdruck ist Temperatur-limitiert
-     (Korrelation Tagesmittelwerte Potsdam 2022-2023, DWD)",
-     las=1, pch=3, cex=2, col="red", cex.main=0.9)
+plot(clim$TMK, clim$VPM, xlab="air temperature", ylab="vapor pressure", 
+     main="The maximum vapor pressure is temperature-limited
+     (correlation daily averages Potsdam 2023-2024, DWD)",
+     las=1, pch=3, cex=1.2, col="#FF000066", cex.main=0.7)
 @
-\vspace{0.1em}
-<<plot_live2, fig.show="hide", size="scriptsize", fig.height=3.0>>=
+\vspace{0.4em}
+<<plot_live2, fig.height=1.0, echo=-1>>=
+par(mar=c(3,3,0,1), mgp=c(1.9,0.7,0), las=1)
 # install.packages("berryFunctions")
-plot(clim$MESS_DATUM, clim$TXK, type="l", xlab="", xaxt="n", las=1, lwd=3)
+plot(clim$MESS_DATUM, clim$TXK, type="l", xlab="", xaxt="n", lwd=3)
 berryFunctions::monthAxis()
 @
-\end{frame}
-
-%------------------------------------------------------------%
-
-\begin{frame}[fragile]{Plotting live demo II}
-\includegraphics[width=\textwidth]{figure/plot_live1-1.pdf}
-\end{frame}
-
-%------------------------------------------------------------%
-
-\begin{frame}[fragile]{Plotting live demo III}
-\includegraphics[width=\textwidth]{figure/plot_live2-1.pdf}
 \end{frame}
 
 %------------------------------------------------------------%
@@ -498,13 +506,41 @@ xaxt="n" # axis type (none to suppress axis)
 @
 \end{frame}
 
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{exporting graphics}
+\pause
+Open a PDF device into which all the plots are routed:
+<<pdf_open, eval=FALSE>>=
+pdf("filename.pdf", width=7, height=5)
+@
+\pause
+Create (several) plots:
+<<pdf_graphics, eval=FALSE>>=
+plot(clim$TMK, clim$FM)
+boxplot(clim[,c(4,5,8:12,16:18)], 
+        col=rainbow(10), range=0)
+@
+\pause
+Close the PDF device:
+<<pdf_close, eval=FALSE>>=
+dev.off()
+@
+\pause
+Open the pdf in a viewer (not editor) to enable live edits:
+<<function_openpdf, eval=FALSE>>=
+berryFunctions::openPDF("filename.pdf")
+@
+\end{frame}
+
 % ---------------------------
 
-\section{using for loops}
+\section{for-loops}
 
 % ---------------------------
 
 \begin{frame}[fragile]{Preparing for \rcode{for} loops}
+\pause
 \begin{exercise}{using objects to subset}
 \begin{enumerate}
   \item Please give your metadata rownames as follows:
@@ -552,6 +588,111 @@ for(var in meta$Par)
 @
 \end{frame}
 
+% ---------------------------
+
+\section{functions}
+
+% ---------------------------
+
+\begin{frame}[fragile]{Writing functions}
+\pause
+\vspace{-0.8em}
+\begin{itemize}[<+->]
+\item write a function if a piece of code is to be run several times
+\item use \rcode{for} loops (almost) only for graphics
+\item otherwise, use functions \onslide<+-> (with unit tests)
+\item
+% \onslide<+->
+<<function_def>>=
+analyze_clim_column <- function(cn)
+  {
+  values <- clim[,cn]
+  hist(values, breaks=20, col="salmon",
+       main=meta[cn,"Label"])
+  output <- max(values, na.rm=TRUE)
+  return(output)
+  }
+@
+\item \rcode{values} and \rcode{output} are local, temporary objects, \onslide<+-> not available outside of the function call
+\item for flexibility, use \rcode{function(df, cn)} and \rcode{df[,cn]} instead of hardcoding the "clim" object name
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Calling your function}
+\pause
+<<function_call, echo=-1, fig.height=3>>=
+par(mar=c(2.8,2.8,2,0), mgp=c(1.8,0.7,0), las=1)
+analyze_clim_column("FX")
+@
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Preparing for \rcode{sapply} loops over columns / values}
+\pause
+looping over the columns of a data.frame:
+\pause
+<<sapply_columns, eval=FALSE>>=
+sapply(X=clim, FUN=class)
+@
+\pause
+<<sapply_columns_internal, echo=FALSE>>=
+sapply(X=clim[,1:4], FUN=class)
+@
+\pause \vspace{0.8em}
+looping over a vector of values:
+<<sapply_vector, pauseresult=TRUE>>=
+sapply(X=c("FX", "MESS_DATUM", "QN_3"),  # anonymous
+       FUN=function(n) class(clim[,n]))  # function
+@
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Running a small data analysis and visualisation project}
+\pause
+\begin{exercise}{Final task: loop over the columns with sapply}
+In a self contained (separate script),
+\begin{enumerate}
+  \item read both files (rewrite from scratch for practice)
+  \item write a function (from scratch) that 
+  \begin{itemize}
+    \item accepts a column name
+    \item plots a histogram of that column
+    \item uses the label from the meta data for the title
+    \item and returns the range (min + max) of available data (ignore NAs)
+  \end{itemize}
+  \item run the function for all suitable columns,
+  \item exporting the individual graphs into a pdf file.
+\end{enumerate}
+\end{exercise}
+\end{frame}
+
+%------------------------------------------------------------%
+
+\begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: loop over the columns with sapply}
+\pause \vspace{-0.4em}
+\footnotesize
+<<sapply_graphics, echo=-1>>=
+options(width=80)
+clim <- read.table(file="Rintro/clim.txt", header=TRUE)
+meta <- read.table(file="Rintro/meta.txt", header=TRUE, 
+                   sep=";", stringsAsFactors=FALSE)
+analyze_clim_column <- function(cn)
+  {
+  values <- clim[,cn]
+  hist(values, breaks=20, col="salmon",
+       main=meta[cn,"Label"])
+  return(range(values, na.rm=TRUE))
+  }
+pdf("clim_columns.pdf", height=5)
+ranges <- sapply(meta$Par, analyze_clim_column)
+dev.off()
+ranges[,1:11]
+@
+\end{frame}
 
 % ---------------------------
 
@@ -563,8 +704,9 @@ for(var in meta$Par)
 %------------------------------------------------------------%
 
 \begin{frame}[fragile]{Selected resources}
+\pause
 \begin{itemize}[<+->]
-\item (online) Book: Grolemund \& Wickham (2017) - \href{http://r4ds.had.co.nz/}{R for Data Science}
+\item (online) Book: Grolemund \& Wickham (2017) - \href{https://r4ds.hadley.nz/}{R for Data Science}
 \item German book: Uwe Ligges (2005) - Programmieren mit R
 \item \href{https://bookdown.org/brry/course/}{bookdown.org/brry/course}
 \item \href{https://github.com/jonasstein/R-Reference-Card/raw/master/R-refcard.pdf}{Reference Card} by Tom Short \& Jonas Stein
@@ -577,8 +719,7 @@ for(var in meta$Par)
 
 \begin{frame}{Feedback}
 \center{
-Please fill out the feedback form at\\[1em]
-\href{https://bit.ly/feedbackR}{bit.ly/feedbackR}\\[1em]
+Please fill out the \href{https://forms.gle/8pjCd9DwARSLgYVT7}{feedback form}.\\[1em]
 (it only takes a few minutes and helps to improve the course)\\[1em]
 Thanks!\\[1em]
 }

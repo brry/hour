@@ -1,6 +1,6 @@
 
 # 1-3 hour R Intro code
-# Berry Boessenkool, berry-b@gmx.de, 2018-06
+# Berry Boessenkool, berry-b@gmx.de, 2018-2024
 
 
 wd <- getwd()
