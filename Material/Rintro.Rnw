@@ -677,20 +677,28 @@ In a self contained (separate script),
 \begin{frame}[fragile]{Solution to exercise \arabic{exercisecount}: loop over the columns with sapply}
 \pause \vspace{-0.4em}
 \footnotesize
-<<sapply_graphics, echo=-1>>=
-options(width=80)
-clim <- read.table(file="Rintro/clim.txt", header=TRUE)
-meta <- read.table(file="Rintro/meta.txt", header=TRUE, 
-                   sep=";", stringsAsFactors=FALSE)
+<<sapply_graphics, results='hide', fig.show='hide'>>=
+clim <- read.table("Rintro/clim.txt", header=TRUE)
+meta <- read.table("Rintro/meta.txt", header=TRUE,sep=";")
+clim$MESS_DATUM <- as.Date(clim$MESS_DATUM)
+rownames(meta) <- meta$Par
+
 analyze_clim_column <- function(cn)
   {
   values <- clim[,cn]
   hist(values, breaks=20, col="salmon", main=meta[cn,"Label"])
   return(range(values, na.rm=TRUE))
   }
+analyze_clim_column("TMK") # test the function
 pdf("clim_columns.pdf", height=5)
 ranges <- sapply(meta$Par, analyze_clim_column)
 dev.off()
+
+#
+@
+\vspace{-1em}
+<<sapply_graphics2, echo=-1>>=
+options(width=80)
 ranges[,1:11]
 @
 \end{frame}
