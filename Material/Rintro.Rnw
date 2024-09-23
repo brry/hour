@@ -490,7 +490,7 @@ berryFunctions::monthAxis()
 
 %------------------------------------------------------------%
 
-\begin{frame}[fragile]{commonly needed \rcode{plot} arguments}
+\begin{frame}[fragile]{Commonly needed \rcode{plot} arguments}
 <<plotoverview, eval=FALSE>>=
 plot(x, y, # point coordinates
 col="lightblue", # point color
@@ -508,7 +508,7 @@ xaxt="n" # axis type (none to suppress axis)
 
 %------------------------------------------------------------%
 
-\begin{frame}[fragile]{exporting graphics}
+\begin{frame}[fragile]{Exporting graphics}
 \pause
 Open a PDF device into which all the plots are routed:
 <<pdf_open, eval=FALSE>>=
@@ -633,7 +633,7 @@ analyze_clim_column("FX")
 \begin{frame}[fragile]{Preparing for \rcode{sapply} loops over columns / values}
 \pause
 looping over the columns of a data.frame:
-\pause
+\pause \vspace{0.4em}
 <<sapply_columns, eval=FALSE>>=
 sapply(X=clim, FUN=class)
 @
@@ -641,11 +641,12 @@ sapply(X=clim, FUN=class)
 <<sapply_columns_internal, echo=FALSE>>=
 sapply(X=clim[,1:4], FUN=class)
 @
-\pause \vspace{0.8em}
+\pause \vspace{1em}
 looping over a vector of values:
+\pause \vspace{0.4em}
 <<sapply_vector, pauseresult=TRUE>>=
-sapply(X=c("FX", "MESS_DATUM", "QN_3"),  # anonymous
-       FUN=function(n) class(clim[,n]))  # function
+sapply(X=c("FX", "MESS_DATUM", "QN_3"),   # anonymous
+       FUN=function(n) class(clim[,n])  ) # function
 @
 \end{frame}
 
@@ -683,8 +684,7 @@ meta <- read.table(file="Rintro/meta.txt", header=TRUE,
 analyze_clim_column <- function(cn)
   {
   values <- clim[,cn]
-  hist(values, breaks=20, col="salmon",
-       main=meta[cn,"Label"])
+  hist(values, breaks=20, col="salmon", main=meta[cn,"Label"])
   return(range(values, na.rm=TRUE))
   }
 pdf("clim_columns.pdf", height=5)
