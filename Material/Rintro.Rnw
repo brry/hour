@@ -114,16 +114,17 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 \begin{textblock*}{18em}(10pt,30pt) % topleft corner x=10pt, y=30pt
 \centering
 \Large
-\vspace{3em}
+\vspace{2em}
 \includegraphics[width=0.8cm]{fig_extern/Rlogo.png}
-\textbf{introduction\\[0.8em] \large start your programming\\journey in a few hours}
+\textbf{introduction\\[0.8em] \large 
+start your \\[0.1em] programming journey \\ in a few hours}
 \end{textblock*}
 \normalsize
 \vspace{12em}
 Berry Boessenkool, June 2018 - Sept 2024\\[0.5em]
-\texttt{berry-b@gmx.de}\\[0.5em]
+\texttt{berry-b@gmx.de}\\[1.5em]
 % \href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
-\scriptsize
+\tiny
 \textit{Presentation template generated with} \rcode{berryFunctions::createPres}\\
 \normalsize
 \TPshowboxesfalse % no border around this box
@@ -135,7 +136,7 @@ Berry Boessenkool, June 2018 - Sept 2024\\[0.5em]
 % \includegraphics[width=3em]{fig_extern/camera2.png}\\
 \tiny
 % ENCOURAGED\\[0.5em]%
-\includegraphics[width=6em]{fig_extern/ccby.png}\\[-0.3em]
+\includegraphics[width=5em]{fig_extern/ccby.png}\\[-0.7em]
 \href{https://creativecommons.org/licenses/by/4.0}{use freely, cite me}%
 \normalsize
 \vspace{0.5em}
