@@ -132,14 +132,15 @@ Berry Boessenkool, June 2018 - Sept 2024\\[0.5em]
 \begin{textblock*}{8em}(230pt,50pt) % topleft corner x=230pt, y=30pt
 \centering
 % \textblockcolour{Dandelion}
-\vspace{4em}
+\vspace{2em}
 % \includegraphics[width=3em]{fig_extern/camera2.png}\\
 \tiny
 % ENCOURAGED\\[0.5em]%
-\includegraphics[width=5em]{fig_extern/ccby.png}\\[-0.7em]
-\href{https://creativecommons.org/licenses/by/4.0}{use freely, cite me}%
+\includegraphics[width=5em]{fig_extern/ccby.png}\\[-0.1em]
+\href{https://creativecommons.org/licenses/by/4.0}{use freely, cite me}\\%
 \normalsize
-\vspace{0.5em}
+\vspace{1.5em}
+\href{https://www.youtube.com/playlist?list=PLww5S2oes385cta316emIBe-GH6LDaHlF}{course videos}
 \end{textblock*}
 \TPshowboxestrue % borders around other boxes, as specified by \usepackage[...,showboxes]{textpos}
 \textblockcolour{} % reset block fill color to none/transparent
