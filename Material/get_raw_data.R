@@ -1,5 +1,5 @@
 
-# 1-3 hour R Intro code
+# R Intro course master document
 # Berry Boessenkool, berry-b@gmx.de, 2018-2024
 
 
