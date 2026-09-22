@@ -5,7 +5,7 @@
 
 
 % Make sure to set weaving to knitr before compiling:
-% Rstudio - Tools - Global Options - Sweave - weave Rnw files using: knitr
+% RStudio - Tools - Global Options - Sweave - weave Rnw files using: knitr
 
 
 \setbeamerfont{frametitle}{size=\normalsize}
@@ -92,7 +92,7 @@
 
 % ---------------------------
 
-\section{intro (R, Rstudio)}
+\section{intro (R, RStudio)}
 
 % ---------------------------
 
@@ -121,7 +121,7 @@ start your \\[0.1em] programming journey \\ in a few hours}
 \end{textblock*}
 \normalsize
 \vspace{12em}
-Berry Boessenkool, June 2018 - Sept 2024\\[0.5em]
+Berry Boessenkool, June 2018 - Sept 2026\\[0.5em]
 \texttt{berry-b@gmx.de}\\[1.5em]
 % \href{https://github.com/brry/hour}{github.com/brry/hour}\\[1em]
 \tiny
@@ -163,7 +163,7 @@ Berry Boessenkool, June 2018 - Sept 2024\\[0.5em]
 \hrulefill
 \vspace{0.25em}
 \item \includegraphics[width=0.7cm]{fig_extern/Rlogo.png} \onslide<+->is free, \onslide<+->open source, \onslide<+->has a large user community, \onslide<+-> will make your work efficient and productive \onslide<+-> and is the standard for data analysis and visualisation in many universities and industries
-\item R installation instructions: \href{https://bookdown.org/brry/course/install.html}{bookdown.org/brry/course\#install}\\
+\item R installation instructions: \href{https://brry.github.io/course/install.html}{brry.github.io/course/install}\\
 \hrulefill
 \item Wide but shallow introduction, no deep understanding
 \item Brief inputs followed by short exercises (for max learning)
@@ -196,11 +196,11 @@ Berry Boessenkool, June 2018 - Sept 2024\\[0.5em]
 \begin{enumerate}%[<+->]
   \item Download the course \href{https://github.com/brry/hour/raw/master/Material/Rintro.zip}{material} to a suitable folder.
   \item Unzip it (contains folder with files -$>$ 'unzip here').
-  \item Open Rstudio, click "File" -$>$ "New Project" -$>$ "Existing directory", select your folder, click "Create Project".
-  \item Check that Rstudio now has the project name in the topright (instead of "Project: None").
+  \item Open RStudio, click "File" -$>$ "New Project" -$>$ "Existing directory", select your folder, click "Create Project".
+  \item Check that RStudio now has the project name in the topright (instead of "Project: None").
   \item In the bottomright "Files" panel, open the \texttt{script\_intro.R} file.
-  \item Have a look at the \texttt{clim} and \texttt{meta} files. You can also do this within Rstudio. ;-) 
-  \item BONUS: Change Rstudio settings, see \href{https://bookdown.org/brry/course/settings.html}{bookdown.org/brry/course - settings}
+  \item Have a look at the \texttt{clim} and \texttt{meta} files. You can also do this within RStudio. ;-) 
+  \item BONUS: Change RStudio settings, see \href{https://brry.github.io/course/settings.html}{brry.github.io/course - settings}
 \end{enumerate}
 \end{exercise}
 \end{frame}
@@ -219,7 +219,7 @@ In the console, calculate ~ 21+21 ~,~ 7*6 ~ and ~ $\frac{0,3}{4}*\sqrt{313600}$\
 @
 \pause
 \begin{itemize}[<+->]
-  \item objects: assign with ~\rcode{$<-$}~ Rstudio keyboard shortcut:  \key{ALT} + \key{-}  \\
+  \item objects: assign with ~\rcode{$<-$}~ RStudio keyboard shortcut:  \key{ALT} + \key{-}  \\
         \rcode{nstudents <- 15}\\\rcode{nstudents}\\\rcode{nstudents > 12}
   \item What's a good object name? \onslide<+-> $\rightarrow$ short, but explanatory;
         \onslide<+-> lowerCamelStandard\_or\_underscore are good naming conventions
@@ -349,7 +349,7 @@ nrow(clim)
 \vspace{1em}
 \rcode{DF[ ,"name"]} is easier to understand for humans and still returns the same if the order of the columns is changed.
 But it needs more typing.\\
-\rcode{DF\$name} is fast and safe from typos with the autocompletion in Rstudio but cannot be used in loops / functions with the name as input.
+\rcode{DF\$name} is fast and safe from typos with the autocompletion in RStudio but cannot be used in loops / functions with the name as input.
 \end{frame}
 
 % ---------------------------
@@ -368,7 +368,7 @@ install.packages("ggplot2")
 \pause
 Needs to be executed only once, does not need admin rights.\\
 \pause
-Can also be done manually (with no typos) in Rstudio:
+Can also be done manually (with no typos) in RStudio:
 \pause
 \includegraphics[width=0.5\textwidth]{fig_extern/rstudio_pack.png}\\
 \end{frame}
@@ -436,7 +436,7 @@ plot(x=Indometh$time, y=Indometh$conc,
 \begin{frame}[fragile]{Plotting exercise}
 \pause
 \key{Upon error "Figure margins too large",}\\
-\key{drag the Rstudio Plots panel bigger.}
+\key{drag the RStudio Plots panel bigger.}
 \pause \vspace{-0.4em}
 \begin{exercise}{Scatterplots, line plots}
 \begin{enumerate}
@@ -462,7 +462,7 @@ clim$MESS_DATUM <- as.Date(clim$MESS_DATUM)
 <<sol_plot, eval=T, echo=-1, size="scriptsize", fig.height=2.5>>=
 par(mfrow=c(1,2), mgp=c(2,0.7,0), mar=c(3,3,3,1), las=1, cex.main=0.8)
 plot(clim$TMK, clim$VPM, xlab="air temperature", ylab="vapor pressure", 
-     main="correlation daily averages\nPotsdam 2023-2024, DWD")
+     main="correlation daily averages\nPotsdam 2025-2026, DWD")
 
 plot(clim$MESS_DATUM, clim$TXK, type="l", main="seasonality visible")
 
@@ -478,7 +478,7 @@ plot(clim$MESS_DATUM, clim$TXK, type="l", main="seasonality visible")
 par(mar=c(3,3,2,1), mgp=c(1.9,0.7,0))
 plot(clim$TMK, clim$VPM, xlab="air temperature", ylab="vapor pressure", 
      main="The maximum vapor pressure is temperature-limited
-     (correlation daily averages Potsdam 2023-2024, DWD)",
+     (correlation daily averages Potsdam 2025-2026, DWD)",
      las=1, pch=3, cex=1.2, col="#FF000066", cex.main=0.7)
 @
 \vspace{0.4em}
@@ -552,7 +552,7 @@ rownames(meta) <- meta$Par
   \item Create an object \rcode{var} with the character string \rcode{"FX"}.
   \item Get the meta value for row \rcode{var} and column \rcode{"Label"}.
   \item Plot the \rcode{var} column of \rcode{clim} as a time series.
-  \item Use the output from task 2 to give the plot a title.
+  \item Use the output from task 3 to give the plot a title.
   \item BONUS: make the x-axis nicer by suppressing the default axis (\rcode{xaxt="n"})
         and adding a monthAxis from the \rcode{berryFunctions} package.
 \end{enumerate}
@@ -718,10 +718,9 @@ ranges[,1:11]
 \begin{itemize}[<+->]
 \item (online) Book: Grolemund \& Wickham (2017) - \href{https://r4ds.hadley.nz/}{R for Data Science}
 \item German book: Uwe Ligges (2005) - Programmieren mit R
-\item \href{https://bookdown.org/brry/course/}{bookdown.org/brry/course}
+\item \href{https://brry.github.io/course/}{brry.github.io/course}
 \item \href{https://github.com/jonasstein/R-Reference-Card/raw/master/R-refcard.pdf}{Reference Card} by Tom Short \& Jonas Stein
 \item \href{https://stackoverflow.com/questions/tagged/r}{StackOverflow} for programming questions $<$-- \alert{main resource}
-% \item More at \href{https://bookdown.org/brry/course/resources.html}{bookdown.org/brry/course/resources}
 \end{itemize}
 \end{frame}
 

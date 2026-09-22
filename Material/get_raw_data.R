@@ -1,6 +1,6 @@
 
 # R Intro course master document
-# Berry Boessenkool, berry-b@gmx.de, 2018-2024
+# Berry Boessenkool, berry-b@gmx.de, 2018-2026
 
 
 wd <- getwd()
